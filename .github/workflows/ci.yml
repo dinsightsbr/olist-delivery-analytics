@@ -73,7 +73,7 @@ jobs:
           python-version: "3.12"
       - name: Diff measures and relationships against the base branch
         run: python tools/measure_diff.py "origin/${{ github.base_ref }}" HEAD > model-diff.md
-      - uses: marocchino/sticky-pull-request-comment@v2
+      - uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: model-diff
           path: model-diff.md
@@ -110,7 +110,7 @@ jobs:
           max-tokens: 1500
       - name: Post the review as a sticky comment
         if: steps.diff.outputs.changed == 'true'
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: ai-sql-review
           message: |
