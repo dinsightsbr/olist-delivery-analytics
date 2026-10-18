@@ -1,5 +1,5 @@
-jsonschema>=4.23
-referencing>=0.35
-pillow>=10.4
+jsonschema>=4.26.0
+referencing>=0.37.0
+pillow>=12.3.0
 sqlfluff==4.4.0
-pre-commit>=4.0
+pre-commit>=4.7.0
