@@ -121,6 +121,7 @@ jobs:
             echo
             echo "<sub>Model: $MODEL · prompt: .github/prompts/sql-review.md · advisory only, the reviewer decides.</sub>"
           } > review.md
+          echo "model usage (tokens): $(jq -r '.usage.total_tokens // "n/a"' response.json)"
       - name: Post the review
         if: steps.gate.outputs.changed == 'true' && steps.gate.outputs.enabled == 'true' && hashFiles('review.md') != ''
         uses: marocchino/sticky-pull-request-comment@v3
