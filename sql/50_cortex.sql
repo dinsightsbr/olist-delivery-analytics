@@ -7,7 +7,7 @@
 -- RESULT ON 16/10/2026: both SNOWFLAKE.CORTEX.CLASSIFY_TEXT and AI_CLASSIFY
 -- return "AI function ... is not available for trial accounts". Section B
 -- below is the rule-based fallback that was actually run; it is transparent
--- and explainable, which is a fine answer in the interview ("in production I
+-- and explainable, which is a fine answer when asked ("in production I
 -- would swap the CASE for AI_CLASSIFY and keep the rules as a regression test").
 -- Section A is kept as the production version.
 -- =============================================================================

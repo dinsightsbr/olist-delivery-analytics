@@ -209,7 +209,7 @@ Title | Scenario =
 
 **Breakdown** (Modeling > New parameter > Fields): `DIM_CUSTOMER[customer_state]`, `DIM_CUSTOMER[customer_region]`, `DIM_SELLER[seller_state]`, `DIM_PRODUCT[category_label]`, `DIM_PRODUCT[weight_band]`. One bar chart, one slicer, five views.
 
-## 5. Reconciliation routine (before the interview)
+## 5. Reconciliation routine (before publishing)
 
 1. In Snowsight run the last query of `sql/40_semantic.sql` (`V_KPI_MONTHLY` by month).
 2. In Power BI build a hidden table visual: `year_month`, `[Orders]`, `[GMV]`, `[Late Delivery %]` with the analysis-window filter **off**.
