@@ -884,8 +884,7 @@ def build_pages() -> list:
           "dbt conventions (stg_, dim_, fct_). The report is saved as a Power BI Project (PBIP: TMDL + PBIR) and versioned "
           "in Git. Comment themes come from rule-based SQL because Cortex AI functions are not enabled on trial accounts; "
           "the Cortex version is written and ready for production.", BODY)],
-        [("Built with Claude as a pair programmer for SQL, DAX and documentation; every number reconciled against the "
-          "warehouse before use.", NOTE)],
+        [("Every number reconciled against the warehouse before use.", NOTE)],
     ])
     p.add("tableEx", 640, 90, 616, 300,
           roles={"Values": [col("DIM_DATE", "year_month"), mea("Orders"), mea("GMV"), mea("Late Delivery %"),

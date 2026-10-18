@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
-  "name": "cb05ed33bd175509",
+  "name": "8614c003d53e5aee",
   "position": {
     "x": 25,
     "y": 169,
@@ -112,7 +112,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Built with Claude as a pair programmer for SQL, DAX and documentation; every number reconciled against the warehouse before use.",
+                    "value": "Every number reconciled against the warehouse before use.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#718096"

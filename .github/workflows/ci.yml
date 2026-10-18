@@ -79,14 +79,12 @@ jobs:
           path: model-diff.md
 
   ai-sql-review:
-    name: AI review of SQL changes (Claude)
+    name: AI review of SQL changes
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
-      issues: write
-      id-token: write
     steps:
       - uses: actions/checkout@v7
         with:
@@ -94,42 +92,53 @@ jobs:
       - name: Any SQL changed, and is the reviewer enabled?
         id: gate
         env:
-          HAS_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' || secrets.ANTHROPIC_API_KEY != '' }}
+          HAS_KEY: ${{ secrets.OPENAI_API_KEY != '' }}
         run: |
-          if git diff --quiet "origin/${{ github.base_ref }}...HEAD" -- "sql/*.sql"; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
+          git diff --unified=4 "origin/${{ github.base_ref }}...HEAD" -- "sql/*.sql" > sql.diff
+          if [ -s sql.diff ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
-          echo "enabled=$HAS_TOKEN" >> "$GITHUB_OUTPUT"
-      - name: Claude reviews the SQL diff
+          echo "enabled=$HAS_KEY" >> "$GITHUB_OUTPUT"
+      - name: Ask the model for a review
         if: steps.gate.outputs.changed == 'true' && steps.gate.outputs.enabled == 'true'
-        # Advisory: a token or API problem must never turn the pull request red.
+        # Advisory: a model or API problem must never turn the pull request red.
         continue-on-error: true
-        uses: anthropics/claude-code-action@v1
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          MODEL: ${{ vars.AI_REVIEW_MODEL || 'gpt-4.1-mini' }}
+        run: |
+          jq -n --arg model "$MODEL" --rawfile sys .github/prompts/sql-review.md --rawfile diff sql.diff \
+            '{model: $model, temperature: 0.2, max_tokens: 1500,
+              messages: [{role: "system", content: $sys},
+                         {role: "user", content: ("Unified diff of sql/*.sql:\n\n" + $diff)}]}' > request.json
+          curl -sS --fail-with-body https://api.openai.com/v1/chat/completions \
+            -H "Authorization: Bearer $OPENAI_API_KEY" -H "Content-Type: application/json" \
+            -d @request.json > response.json
+          {
+            echo "### AI review of the SQL changes"
+            echo
+            jq -r '.choices[0].message.content' response.json
+            echo
+            echo "<sub>Model: $MODEL · prompt: .github/prompts/sql-review.md · advisory only, the reviewer decides.</sub>"
+          } > review.md
+          echo "model usage (tokens): $(jq -r '.usage.total_tokens // "n/a"' response.json)"
+      - name: Post the review
+        if: steps.gate.outputs.changed == 'true' && steps.gate.outputs.enabled == 'true' && hashFiles('review.md') != ''
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
-          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          prompt: |
-            You are reviewing pull request #${{ github.event.pull_request.number }} of this repository.
-            Review ONLY the changes to files under sql/ (run `git diff origin/${{ github.base_ref }}...HEAD -- 'sql/*.sql'`)
-            and follow the rules and output format in .github/prompts/sql-review.md.
-            Write the review in your comment. Do not approve, request changes, edit files or push.
-          # Quote the tool list: the action splits claude_args on spaces.
-          claude_args: >-
-            --max-turns 6
-            --allowedTools "Bash(git diff:*),Bash(git log:*),Read,Grep,Glob"
-          show_full_output: true
+          header: ai-sql-review
+          path: review.md
       - name: Explain why the review did not run
         if: steps.gate.outputs.changed == 'true' && steps.gate.outputs.enabled != 'true'
         uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: ai-sql-review
           message: |
-            ### 🤖 AI review of the SQL changes
-            Not enabled: add the `CLAUDE_CODE_OAUTH_TOKEN` secret (from `claude setup-token`, Claude Pro/Max)
-            or `ANTHROPIC_API_KEY` to let Claude review `sql/` changes on pull requests. The prompt and the
-            rules it follows are in `.github/prompts/sql-review.md`.
+            ### AI review of the SQL changes
+            Not enabled: add the `OPENAI_API_KEY` secret to have a model review `sql/` changes on pull requests.
+            The prompt and the rules it follows are in `.github/prompts/sql-review.md`.
 
   snowflake-checks:
     name: Warehouse checks (Snowflake)
