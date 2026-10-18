@@ -1,7 +1,7 @@
 -- =============================================================================
 -- 90_checks.sql — Reconciliation and data-quality checks
 -- Every query should return expected = TRUE (or zero rows where stated).
--- These are the numbers to quote in the interview when asked "how do you know
+-- These are the numbers to quote when someone asks "how do you know
 -- the dashboard is right?".
 -- =============================================================================
 USE ROLE ACCOUNTADMIN;
