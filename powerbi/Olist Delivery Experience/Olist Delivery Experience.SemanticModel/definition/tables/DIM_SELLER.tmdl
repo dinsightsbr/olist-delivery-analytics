@@ -1,0 +1,81 @@
+table DIM_SELLER
+	lineageTag: d6146058-edc0-5584-9bfb-fa6dd79ca055
+
+	column seller_id
+		dataType: string
+		lineageTag: 17d959bf-bf0d-5f13-984a-90495c8efbf4
+		summarizeBy: none
+		sourceColumn: SELLER_ID
+
+		annotation SummarizationSetBy = User
+
+	column seller_zip_prefix
+		dataType: string
+		lineageTag: bd822e0c-7c21-5113-8705-16ccba3662e1
+		summarizeBy: none
+		sourceColumn: SELLER_ZIP_PREFIX
+
+		annotation SummarizationSetBy = User
+
+	column seller_city
+		dataType: string
+		lineageTag: 403c3ea5-3fb2-5fc2-8a82-6c8724150f02
+		summarizeBy: none
+		sourceColumn: SELLER_CITY
+
+		annotation SummarizationSetBy = User
+
+	column seller_state
+		dataType: string
+		lineageTag: 716bb685-b696-573e-8c9e-3d807b2dcea6
+		summarizeBy: none
+		sourceColumn: SELLER_STATE
+
+		annotation SummarizationSetBy = User
+
+	column seller_state_name
+		dataType: string
+		lineageTag: 16aef617-47f1-5157-8a7f-653c528cb6e7
+		summarizeBy: none
+		sourceColumn: SELLER_STATE_NAME
+
+		annotation SummarizationSetBy = User
+
+	column seller_region
+		dataType: string
+		lineageTag: c8b37cc2-4389-5e24-bb37-2cac548fa6c3
+		summarizeBy: none
+		sourceColumn: SELLER_REGION
+
+		annotation SummarizationSetBy = User
+
+	column seller_lat
+		dataType: double
+		formatString: 0.0000
+		lineageTag: 93d52da3-973b-5106-8298-1be78caa4353
+		summarizeBy: none
+		sourceColumn: SELLER_LAT
+
+		annotation SummarizationSetBy = User
+
+	column seller_lng
+		dataType: double
+		formatString: 0.0000
+		lineageTag: f70067da-8ada-5f46-bacc-b498c5add641
+		summarizeBy: none
+		sourceColumn: SELLER_LNG
+
+		annotation SummarizationSetBy = User
+
+	partition DIM_SELLER = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(SnowflakeServer, SnowflakeWarehouse, [Role = SnowflakeRole]),
+				    Database = Source{[Name = "OLIST", Kind = "Database"]}[Data],
+				    Schema = Database{[Name = "MARTS", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "DIM_SELLER", Kind = "Table"]}[Data],
+				    Typed = Table.TransformColumnTypes(Data, {{"SELLER_ID", type text}, {"SELLER_ZIP_PREFIX", type text}, {"SELLER_CITY", type text}, {"SELLER_STATE", type text}, {"SELLER_STATE_NAME", type text}, {"SELLER_REGION", type text}, {"SELLER_LAT", type number}, {"SELLER_LNG", type number}})
+				in
+				    Typed
+

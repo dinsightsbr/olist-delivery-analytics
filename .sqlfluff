@@ -1,0 +1,29 @@
+[sqlfluff]
+dialect = snowflake
+templater = raw
+# Readability layout (aligned columns, long comment banners) is intentional in these scripts;
+# lint for semantics: capitalisation, aliasing, ambiguity, references, structure, conventions.
+rules = core
+# CP02: Snowflake folds unquoted identifiers to UPPER; these scripts use UPPER for objects and lower for
+#       columns on purpose. AL03: UNION ALL check blocks name columns in the first SELECT only.
+# AM06: ordinal GROUP BY in ad-hoc check queries is deliberate.
+exclude_rules = layout, CP02, AL03, AM06
+# Snowflake-only syntax (SEMANTIC VIEW, QUALIFY in some positions) is not fully parsable yet.
+ignore = parsing
+max_line_length = 160
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.identifiers]
+extended_capitalisation_policy = lower
+
+[sqlfluff:rules:capitalisation.functions]
+extended_capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.literals]
+capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.types]
+extended_capitalisation_policy = upper
+

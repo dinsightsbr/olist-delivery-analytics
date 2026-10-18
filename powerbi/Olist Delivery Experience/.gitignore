@@ -1,0 +1,3 @@
+# Power BI Desktop local cache
+*.SemanticModel/.pbi/
+*.Report/.pbi/

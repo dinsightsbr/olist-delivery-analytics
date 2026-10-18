@@ -1,0 +1,5 @@
+# Every change needs a review from the owner. sql/ and the semantic model are listed explicitly so
+# the branch protection rule "require review from code owners" covers them by name.
+*            @dinsightsbr
+/sql/        @dinsightsbr
+/powerbi/    @dinsightsbr

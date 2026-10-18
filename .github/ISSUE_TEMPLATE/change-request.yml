@@ -1,0 +1,33 @@
+name: Dashboard change request
+description: Ask for a new metric, visual or data fix
+title: "[Change] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: decision
+    attributes:
+      label: Which decision does this support?
+      description: Who uses the number and what they will do differently.
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Where does the change belong?
+      options:
+        - Snowflake (STG / MARTS)
+        - Semantic model (measures)
+        - Report (visuals)
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: definition
+    attributes:
+      label: Proposed definition
+      description: The formula in plain words. Example - "late = delivered after the estimated date, calendar days".
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: How will we know it is right?
+      description: The reconciliation query or the number it must match.

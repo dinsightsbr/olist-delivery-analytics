@@ -1,0 +1,343 @@
+table FCT_ORDERS
+	lineageTag: 5a1197fc-58b2-5ef0-be8a-8cf534a4238d
+
+	column order_id
+		dataType: string
+		lineageTag: b8f35852-0c2f-5db3-832a-67a2f3d1f87f
+		summarizeBy: none
+		sourceColumn: ORDER_ID
+
+		annotation SummarizationSetBy = User
+
+	column customer_id
+		dataType: string
+		isHidden
+		lineageTag: 59b37fce-f87b-54db-89bd-b3b836875d94
+		summarizeBy: none
+		sourceColumn: CUSTOMER_ID
+
+		annotation SummarizationSetBy = User
+
+	column customer_unique_id
+		dataType: string
+		isHidden
+		lineageTag: 067cf455-0fd9-58a6-9e55-36366c88df04
+		summarizeBy: none
+		sourceColumn: CUSTOMER_UNIQUE_ID
+
+		annotation SummarizationSetBy = User
+
+	column primary_seller_id
+		dataType: string
+		isHidden
+		lineageTag: 862ec04c-9cb2-54b1-b6b5-dc889e68c520
+		summarizeBy: none
+		sourceColumn: PRIMARY_SELLER_ID
+
+		annotation SummarizationSetBy = User
+
+	column order_status
+		dataType: string
+		lineageTag: 38186702-45c0-5b52-adb0-b6aa403ab7df
+		summarizeBy: none
+		sourceColumn: ORDER_STATUS
+
+		annotation SummarizationSetBy = User
+
+	column purchased_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 133fba9e-fa56-533a-ba98-2f68b8f87d46
+		summarizeBy: none
+		sourceColumn: PURCHASED_AT
+
+		annotation SummarizationSetBy = User
+
+	column purchase_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e460d084-c417-5f45-8636-b5f6e6e0a19f
+		summarizeBy: none
+		sourceColumn: PURCHASE_DATE_KEY
+
+		annotation SummarizationSetBy = User
+
+	column approved_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b2ba7482-ab2a-5e23-b0c7-a3919e03e15d
+		summarizeBy: none
+		sourceColumn: APPROVED_AT
+
+		annotation SummarizationSetBy = User
+
+	column delivered_to_carrier_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 27f515b0-005c-52b7-b0de-b02717b24649
+		summarizeBy: none
+		sourceColumn: DELIVERED_TO_CARRIER_AT
+
+		annotation SummarizationSetBy = User
+
+	column delivered_to_customer_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 530881d2-bd15-51c7-a3e2-cebd501ffb1e
+		summarizeBy: none
+		sourceColumn: DELIVERED_TO_CUSTOMER_AT
+
+		annotation SummarizationSetBy = User
+
+	column delivered_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 12d202d3-7c16-509d-9e12-efbeb0d0bf12
+		summarizeBy: none
+		sourceColumn: DELIVERED_DATE_KEY
+
+		annotation SummarizationSetBy = User
+
+	column estimated_delivery_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fd07e9ab-73c5-585b-97c7-0923d3c5884c
+		summarizeBy: none
+		sourceColumn: ESTIMATED_DELIVERY_AT
+
+		annotation SummarizationSetBy = User
+
+	column estimated_delivery_date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5c3c992b-0fe5-5b22-811f-d16b27df563b
+		summarizeBy: none
+		sourceColumn: ESTIMATED_DELIVERY_DATE_KEY
+
+		annotation SummarizationSetBy = User
+
+	column is_delivered
+		dataType: boolean
+		lineageTag: 1c85bcd6-7a08-5b75-96fc-23860f7105f4
+		summarizeBy: none
+		sourceColumn: IS_DELIVERED
+
+		annotation SummarizationSetBy = User
+
+	column delivery_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 7c1f406f-ecfe-51c7-8387-d007000e95c4
+		summarizeBy: none
+		sourceColumn: DELIVERY_DAYS
+
+		annotation SummarizationSetBy = User
+
+	column estimated_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 48ede54f-b007-5dc5-8756-3be56f1a4de0
+		summarizeBy: none
+		sourceColumn: ESTIMATED_DAYS
+
+		annotation SummarizationSetBy = User
+
+	column delay_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 5868248a-d1cf-595c-ae32-3c34c87ee2f7
+		summarizeBy: none
+		sourceColumn: DELAY_DAYS
+
+		annotation SummarizationSetBy = User
+
+	column is_late
+		dataType: boolean
+		lineageTag: c9ca9dbe-7ec2-58d5-be1d-2b6007615435
+		summarizeBy: none
+		sourceColumn: IS_LATE
+
+		annotation SummarizationSetBy = User
+
+	column delivery_bucket
+		dataType: string
+		lineageTag: bfb04318-7e98-5eea-9881-ca69225fe870
+		summarizeBy: none
+		sourceColumn: DELIVERY_BUCKET
+		sortByColumn: delivery_bucket_sort
+
+		annotation SummarizationSetBy = User
+
+	column delivery_bucket_sort
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c83dd514-77cd-5c15-9be6-a0c4669affce
+		summarizeBy: none
+		sourceColumn: DELIVERY_BUCKET_SORT
+
+		annotation SummarizationSetBy = User
+
+	column has_review
+		dataType: boolean
+		lineageTag: ac4f3207-cae4-5f2b-af69-5bcdda821d1f
+		summarizeBy: none
+		sourceColumn: HAS_REVIEW
+
+		annotation SummarizationSetBy = User
+
+	column review_score
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3ef082fe-f151-5e0e-8e5a-54390ad0d2aa
+		summarizeBy: none
+		sourceColumn: REVIEW_SCORE
+
+		annotation SummarizationSetBy = User
+
+	column is_low_review
+		dataType: boolean
+		lineageTag: 16a9388e-f7e7-55da-b44e-3e6a2346cbaa
+		summarizeBy: none
+		sourceColumn: IS_LOW_REVIEW
+
+		annotation SummarizationSetBy = User
+
+	column has_comment
+		dataType: boolean
+		lineageTag: 6ece5204-d6ac-5aff-a931-f07babd63be3
+		summarizeBy: none
+		sourceColumn: HAS_COMMENT
+
+		annotation SummarizationSetBy = User
+
+	column review_created_at
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e54405dc-a318-5d62-85d5-98067f8c100b
+		summarizeBy: none
+		sourceColumn: REVIEW_CREATED_AT
+
+		annotation SummarizationSetBy = User
+
+	column payment_value
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 62e9276e-b52d-58bc-96ca-2f9f636d50c5
+		summarizeBy: none
+		sourceColumn: PAYMENT_VALUE
+
+		annotation SummarizationSetBy = User
+
+	column payment_legs
+		dataType: int64
+		formatString: 0
+		lineageTag: 8e46dbc9-47b0-5564-94ef-9a0105c946ee
+		summarizeBy: none
+		sourceColumn: PAYMENT_LEGS
+
+		annotation SummarizationSetBy = User
+
+	column max_installments
+		dataType: int64
+		formatString: 0
+		lineageTag: ffc8c2ec-9973-576e-8054-019e3c55fe3b
+		summarizeBy: none
+		sourceColumn: MAX_INSTALLMENTS
+
+		annotation SummarizationSetBy = User
+
+	column primary_payment_type
+		dataType: string
+		lineageTag: 4261882a-f897-54d4-a0c2-8f03e8638edc
+		summarizeBy: none
+		sourceColumn: PRIMARY_PAYMENT_TYPE
+
+		annotation SummarizationSetBy = User
+
+	column items_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 4e450e1c-23c4-5ce7-9c9a-9abc8cbb7602
+		summarizeBy: none
+		sourceColumn: ITEMS_COUNT
+
+		annotation SummarizationSetBy = User
+
+	column sellers_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 0095a9fa-f67d-5c95-bcf5-12c86c4d86b9
+		summarizeBy: none
+		sourceColumn: SELLERS_COUNT
+
+		annotation SummarizationSetBy = User
+
+	column gmv
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 29caf078-89ad-5331-8d3b-c54915e2f302
+		summarizeBy: none
+		sourceColumn: GMV
+
+		annotation SummarizationSetBy = User
+
+	column freight_value
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 500fc2a1-b2ff-5486-a41b-050be5fa2b55
+		summarizeBy: none
+		sourceColumn: FREIGHT_VALUE
+
+		annotation SummarizationSetBy = User
+
+	column freight_pct
+		dataType: double
+		formatString: 0.0%
+		lineageTag: a414b10e-6356-5f44-8784-3e4fee904c16
+		summarizeBy: none
+		sourceColumn: FREIGHT_PCT
+
+		annotation SummarizationSetBy = User
+
+	column customer_state
+		dataType: string
+		lineageTag: 1fc7c358-0388-55d6-8fb4-a0a08817a824
+		summarizeBy: none
+		sourceColumn: CUSTOMER_STATE
+
+		annotation SummarizationSetBy = User
+
+	column primary_seller_state
+		dataType: string
+		lineageTag: 64882618-c8bf-55bc-9a81-08e7f8f6f579
+		summarizeBy: none
+		sourceColumn: PRIMARY_SELLER_STATE
+
+		annotation SummarizationSetBy = User
+
+	column is_interstate
+		dataType: boolean
+		lineageTag: 09e899e4-889e-53d4-8b02-cb735f49ee69
+		summarizeBy: none
+		sourceColumn: IS_INTERSTATE
+
+		annotation SummarizationSetBy = User
+
+	partition FCT_ORDERS = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(SnowflakeServer, SnowflakeWarehouse, [Role = SnowflakeRole]),
+				    Database = Source{[Name = "OLIST", Kind = "Database"]}[Data],
+				    Schema = Database{[Name = "MARTS", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "FCT_ORDERS", Kind = "Table"]}[Data],
+				    Windowed = Table.SelectRows(Data, each [PURCHASE_DATE_KEY] >= 20170101 and [PURCHASE_DATE_KEY] <= 20180831),
+				    Typed = Table.TransformColumnTypes(Windowed, {{"ORDER_ID", type text}, {"CUSTOMER_ID", type text}, {"CUSTOMER_UNIQUE_ID", type text}, {"PRIMARY_SELLER_ID", type text}, {"ORDER_STATUS", type text}, {"PURCHASED_AT", type datetime}, {"PURCHASE_DATE_KEY", Int64.Type}, {"APPROVED_AT", type datetime}, {"DELIVERED_TO_CARRIER_AT", type datetime}, {"DELIVERED_TO_CUSTOMER_AT", type datetime}, {"DELIVERED_DATE_KEY", Int64.Type}, {"ESTIMATED_DELIVERY_AT", type datetime}, {"ESTIMATED_DELIVERY_DATE_KEY", Int64.Type}, {"IS_DELIVERED", type logical}, {"DELIVERY_DAYS", Int64.Type}, {"ESTIMATED_DAYS", Int64.Type}, {"DELAY_DAYS", Int64.Type}, {"IS_LATE", type logical}, {"DELIVERY_BUCKET", type text}, {"DELIVERY_BUCKET_SORT", Int64.Type}, {"HAS_REVIEW", type logical}, {"REVIEW_SCORE", Int64.Type}, {"IS_LOW_REVIEW", type logical}, {"HAS_COMMENT", type logical}, {"REVIEW_CREATED_AT", type datetime}, {"PAYMENT_VALUE", type number}, {"PAYMENT_LEGS", Int64.Type}, {"MAX_INSTALLMENTS", Int64.Type}, {"PRIMARY_PAYMENT_TYPE", type text}, {"ITEMS_COUNT", Int64.Type}, {"SELLERS_COUNT", Int64.Type}, {"GMV", type number}, {"FREIGHT_VALUE", type number}, {"FREIGHT_PCT", type number}, {"CUSTOMER_STATE", type text}, {"PRIMARY_SELLER_STATE", type text}, {"IS_INTERSTATE", type logical}})
+				in
+				    Typed
+
