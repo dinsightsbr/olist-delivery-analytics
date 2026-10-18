@@ -1,0 +1,14 @@
+# One line ending for everyone: Power BI Desktop and the generator both write LF, and Windows
+# checkouts must not turn TMDL/JSON diffs into whole-file noise.
+*            text=auto eol=lf
+*.tmdl       text eol=lf
+*.json       text eol=lf
+*.pbip       text eol=lf
+*.pbir       text eol=lf
+*.pbism      text eol=lf
+*.platform   text eol=lf
+*.sql        text eol=lf
+*.py         text eol=lf
+*.md         text eol=lf
+*.png        binary
+*.abf        binary

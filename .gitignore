@@ -1,0 +1,16 @@
+# raw data: download from Kaggle, never commit (CC BY-NC-SA 4.0)
+data/
+
+# Power BI Desktop local caches and settings
+**/.pbi/
+*.pbix
+
+# python
+__pycache__/
+*.pyc
+.venv/
+
+# local secrets and keys
+*.p8
+*.pem
+.env

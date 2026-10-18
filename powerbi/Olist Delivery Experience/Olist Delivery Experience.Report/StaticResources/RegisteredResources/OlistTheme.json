@@ -1,0 +1,98 @@
+{
+  "name": "OlistTheme",
+  "dataColors": [
+    "#2B6CB0",
+    "#C53030",
+    "#718096",
+    "#DD6B20",
+    "#2F855A",
+    "#6B46C1",
+    "#B7791F",
+    "#4A5568"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#1A202C",
+  "tableAccent": "#2B6CB0",
+  "good": "#2F855A",
+  "neutral": "#DD6B20",
+  "bad": "#C53030",
+  "maximum": "#2B6CB0",
+  "center": "#A0AEC0",
+  "minimum": "#C53030",
+  "textClasses": {
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#1A202C"
+    },
+    "title": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#1A202C"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#1A202C"
+    },
+    "callout": {
+      "fontSize": 24,
+      "fontFace": "Segoe UI",
+      "color": "#1A202C"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#FFFFFF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "show": true,
+            "color": {
+              "solid": {
+                "color": "#E2E8F0"
+              }
+            },
+            "radius": 6
+          }
+        ],
+        "title": [
+          {
+            "show": true,
+            "fontSize": 12,
+            "bold": true,
+            "fontColor": {
+              "solid": {
+                "color": "#1A202C"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F7FAFC"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
+  }
+}

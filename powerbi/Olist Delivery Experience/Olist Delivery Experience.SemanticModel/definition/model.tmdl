@@ -1,0 +1,12 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["SnowflakeServer", "SnowflakeWarehouse", "SnowflakeRole", "DIM_DATE", "DIM_CUSTOMER", "DIM_SELLER", "DIM_PRODUCT", "FCT_ORDERS", "FCT_ORDER_ITEMS", "REVIEW_THEMES_RULES", "_Measures", "Late Reduction %", "Recommendations"]
+

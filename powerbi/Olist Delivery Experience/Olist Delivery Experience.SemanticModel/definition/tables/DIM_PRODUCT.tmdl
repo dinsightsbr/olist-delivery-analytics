@@ -1,0 +1,100 @@
+table DIM_PRODUCT
+	lineageTag: 64880f5f-16fb-5a6d-b547-fdd43eedd4ab
+
+	column product_id
+		dataType: string
+		lineageTag: cfcd1a3c-54e7-5577-9ad4-e91dcb6f5dba
+		summarizeBy: none
+		sourceColumn: PRODUCT_ID
+
+		annotation SummarizationSetBy = User
+
+	column category_pt
+		dataType: string
+		lineageTag: c46d2b04-d358-52ef-b998-55c39677b286
+		summarizeBy: none
+		sourceColumn: CATEGORY_PT
+
+		annotation SummarizationSetBy = User
+
+	column category_en
+		dataType: string
+		lineageTag: 91b08342-239f-50ae-95e4-97be25515da4
+		summarizeBy: none
+		sourceColumn: CATEGORY_EN
+
+		annotation SummarizationSetBy = User
+
+	column category_label
+		dataType: string
+		lineageTag: 2914afdd-a3d0-55f1-91ad-2550c13b72dc
+		summarizeBy: none
+		sourceColumn: CATEGORY_LABEL
+
+		annotation SummarizationSetBy = User
+
+	column name_length
+		dataType: int64
+		formatString: 0
+		lineageTag: c27b796e-84a4-5b3d-8968-f7eafe8bd9dd
+		summarizeBy: none
+		sourceColumn: NAME_LENGTH
+
+		annotation SummarizationSetBy = User
+
+	column description_length
+		dataType: int64
+		formatString: 0
+		lineageTag: 1fcd94d5-46af-57ac-bdf4-983386c38dee
+		summarizeBy: none
+		sourceColumn: DESCRIPTION_LENGTH
+
+		annotation SummarizationSetBy = User
+
+	column photos_qty
+		dataType: int64
+		formatString: 0
+		lineageTag: 9eb8409c-d250-50b1-b012-bebcfc15c6e4
+		summarizeBy: none
+		sourceColumn: PHOTOS_QTY
+
+		annotation SummarizationSetBy = User
+
+	column weight_g
+		dataType: int64
+		formatString: #,0
+		lineageTag: 08899e72-dcbf-5b00-b8d9-1437f185022b
+		summarizeBy: none
+		sourceColumn: WEIGHT_G
+
+		annotation SummarizationSetBy = User
+
+	column volume_cm3
+		dataType: int64
+		formatString: #,0
+		lineageTag: 1edfee74-9362-5895-ad0c-8b62a4e89f52
+		summarizeBy: none
+		sourceColumn: VOLUME_CM3
+
+		annotation SummarizationSetBy = User
+
+	column weight_band
+		dataType: string
+		lineageTag: cafcc3fd-a3ff-5190-b1de-e6e0bb1c4812
+		summarizeBy: none
+		sourceColumn: WEIGHT_BAND
+
+		annotation SummarizationSetBy = User
+
+	partition DIM_PRODUCT = m
+		mode: import
+		source =
+				let
+				    Source = Snowflake.Databases(SnowflakeServer, SnowflakeWarehouse, [Role = SnowflakeRole]),
+				    Database = Source{[Name = "OLIST", Kind = "Database"]}[Data],
+				    Schema = Database{[Name = "MARTS", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "DIM_PRODUCT", Kind = "Table"]}[Data],
+				    Typed = Table.TransformColumnTypes(Data, {{"PRODUCT_ID", type text}, {"CATEGORY_PT", type text}, {"CATEGORY_EN", type text}, {"CATEGORY_LABEL", type text}, {"NAME_LENGTH", Int64.Type}, {"DESCRIPTION_LENGTH", Int64.Type}, {"PHOTOS_QTY", Int64.Type}, {"WEIGHT_G", Int64.Type}, {"VOLUME_CM3", Int64.Type}, {"WEIGHT_BAND", type text}})
+				in
+				    Typed
+

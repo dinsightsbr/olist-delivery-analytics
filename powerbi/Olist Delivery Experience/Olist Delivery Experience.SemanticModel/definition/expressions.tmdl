@@ -1,0 +1,15 @@
+expression SnowflakeServer = "fpyndgp-mw62856.snowflakecomputing.com" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d6c3d2b5-65bd-5c6b-9648-3a8f9e7d8703
+
+	annotation PBI_ResultType = Text
+
+expression SnowflakeWarehouse = "COMPUTE_WH" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 093ed54d-94d0-562f-9bcd-292daad2e0ae
+
+	annotation PBI_ResultType = Text
+
+expression SnowflakeRole = "BI_READER" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: b397a1af-be72-5ce5-bb07-f1ac5ee725e7
+
+	annotation PBI_ResultType = Text
+
