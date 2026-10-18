@@ -20,7 +20,7 @@ in [measures.md](measures.md).
    (created by the last block of `sql/00_setup.sql`):
    - In the dialog pick **Key Pair** on the left.
    - **User name:** `PBI_SERVICE`
-   - **Private key:** browse to `C:\Users\jhenr\.snowflake\pbi_service_rsa_key.p8`
+   - **Private key:** browse to `~/.snowflake/pbi_service_rsa_key.p8`
      (local file, not in the repo; regenerate with the openssl lines in `00_setup.sql` if lost and
      update the public key in Snowflake).
    - **Passphrase:** leave empty (the key was generated unencrypted for the trial).
@@ -56,7 +56,7 @@ back; the generator is fixed and re-run, not the PBIX.
 3. Page 3: set the scatter's X axis start at 10% and Y at 0%; turn on category labels.
 4. Page 4: if the slicer renders as a range, switch it to *Single value* in Format → Slicer settings.
 5. Add bookmarks in story order (View → Bookmarks) and tidy the filter pane.
-6. File → Export → PDF as the fallback copy for the interview.
+6. File → Export → PDF as the fallback copy for presentations.
 
 ## 5. Branding and canvas
 
