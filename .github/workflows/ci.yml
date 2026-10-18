@@ -104,6 +104,8 @@ jobs:
           echo "enabled=$HAS_TOKEN" >> "$GITHUB_OUTPUT"
       - name: Claude reviews the SQL diff
         if: steps.gate.outputs.changed == 'true' && steps.gate.outputs.enabled == 'true'
+        # Advisory: a token or API problem must never turn the pull request red.
+        continue-on-error: true
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
