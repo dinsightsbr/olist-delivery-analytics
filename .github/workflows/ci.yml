@@ -113,7 +113,11 @@ jobs:
             Review ONLY the changes to files under sql/ (run `git diff origin/${{ github.base_ref }}...HEAD -- 'sql/*.sql'`)
             and follow the rules and output format in .github/prompts/sql-review.md.
             Write the review in your comment. Do not approve, request changes, edit files or push.
-          claude_args: "--max-turns 6 --allowedTools Bash(git diff:*),Bash(git log:*),Read,Grep,Glob"
+          # Quote the tool list: the action splits claude_args on spaces.
+          claude_args: >-
+            --max-turns 6
+            --allowedTools "Bash(git diff:*),Bash(git log:*),Read,Grep,Glob"
+          show_full_output: true
       - name: Explain why the review did not run
         if: steps.gate.outputs.changed == 'true' && steps.gate.outputs.enabled != 'true'
         uses: marocchino/sticky-pull-request-comment@v3
