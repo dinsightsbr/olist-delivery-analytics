@@ -103,6 +103,8 @@ jobs:
           echo "enabled=$HAS_KEY" >> "$GITHUB_OUTPUT"
       - name: Ask the model for a review
         if: steps.gate.outputs.changed == 'true' && steps.gate.outputs.enabled == 'true'
+        # Advisory: a model or API problem must never turn the pull request red.
+        continue-on-error: true
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           MODEL: ${{ vars.AI_REVIEW_MODEL || 'gpt-4.1-mini' }}
