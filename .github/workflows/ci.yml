@@ -102,7 +102,7 @@ jobs:
       - name: Ask the model for a review (GitHub Models, no extra secret needed)
         if: steps.diff.outputs.changed == 'true'
         id: ai
-        uses: actions/ai-inference@v1
+        uses: actions/ai-inference@v3
         with:
           model: openai/gpt-4.1
           system-prompt-file: .github/prompts/sql-review.md
