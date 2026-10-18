@@ -109,3 +109,13 @@ SELECT is_interstate,
 FROM MARTS.FCT_ORDERS
 WHERE is_interstate IS NOT NULL
 GROUP BY 1;
+
+-- 11. Where the late orders are: share of all late orders by customer state (mirrors the
+--     Power BI measure "Share of Late Orders"; RJ + SP alone should be more than half)
+SELECT
+  customer_state,
+  SUM(IFF(is_late, 1, 0)) AS late_orders,
+  SUM(IFF(is_late, 1, 0)) / NULLIF(SUM(SUM(IFF(is_late, 1, 0))) OVER (), 0) AS share_of_late_orders
+FROM MARTS.FCT_ORDERS
+GROUP BY customer_state
+ORDER BY late_orders DESC;

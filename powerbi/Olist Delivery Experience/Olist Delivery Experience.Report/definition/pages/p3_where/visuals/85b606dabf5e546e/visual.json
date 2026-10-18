@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
-  "name": "e0e4f826feb75afb",
+  "name": "85b606dabf5e546e",
   "position": {
     "x": 25,
     "y": 169,
@@ -65,6 +65,20 @@
               },
               "queryRef": "_Measures.Orders",
               "nativeQueryRef": "Orders"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Share of Late Orders"
+                }
+              },
+              "queryRef": "_Measures.Share of Late Orders",
+              "nativeQueryRef": "Share of Late Orders"
             },
             {
               "field": {

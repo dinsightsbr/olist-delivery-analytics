@@ -324,6 +324,9 @@ MEASURES = [
     ("Late Delivery % (Items, min 500)", "IF ( [Items Sold] >= 500, [Late Delivery % (Items)] )", "0.0%", "Delivery"),
     ("On-time Delivery % (min 100 orders)", "IF ( [Orders] >= 100, [On-time Delivery %] )", "0.0%", "Delivery"),
     ("Late Delivery % (min 100 orders)", "IF ( [Orders] >= 100, [Late Delivery %] )", "0.0%", "Delivery"),
+    ("Share of Late Orders",
+     "DIVIDE ( [Late Orders], CALCULATE ( [Late Orders], ALL ( DIM_CUSTOMER ) ) )", "0.0%", "Delivery"),
+    # share of all late orders that happen in the current customer state / region: "where is the pool?"
     # Experience
     ("Reviews", "CALCULATE ( [Orders], FCT_ORDERS[has_review] = TRUE () )", "#,0", "Experience"),
     ("Avg Review Score", "AVERAGE ( FCT_ORDERS[review_score] )", "0.00", "Experience"),
@@ -794,7 +797,8 @@ def build_pages() -> list:
     p.add("barChart", 20, 90, 520, 420,
           roles={"Category": [col("DIM_CUSTOMER", "customer_state")],
                  "Y": [mea("On-time Delivery % (min 100 orders)")],
-                 "Tooltips": [mea("Orders"), mea("Avg Delivery Days"), mea("Avg Review Score"), mea("Freight % of GMV")]},
+                 "Tooltips": [mea("Orders"), mea("Share of Late Orders"), mea("Avg Delivery Days"),
+                              mea("Avg Review Score"), mea("Freight % of GMV")]},
           sort=(mea("On-time Delivery % (min 100 orders)"), "Ascending"),
           title_measure="Title | Where",
           objects=data_labels())
