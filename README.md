@@ -95,7 +95,7 @@ pre-commit install
 | `sql-lint` | SQLFluff, Snowflake dialect — capitalisation, aliasing, references, structure (`.sqlfluff`) |
 | `pbip-validate` | every `page.json` / `visual.json` / `report.json` validates against Microsoft's published PBIR schemas; then regenerates the project and reports drift between the generator and the committed files |
 | `model-diff` | parses the TMDL at base and head and posts a sticky comment: measures added / removed / changed (with DAX diff) and relationship changes |
-| `ai-sql-review` | sends the `sql/` diff to a model through [`actions/ai-inference`](https://github.com/actions/ai-inference) (GitHub Models, no extra secret) with a reviewer prompt (`.github/prompts/sql-review.md`); advisory comment, the human decides |
+| `ai-sql-review` | when `sql/` changes, sends the diff to a chat-completions API (`OPENAI_API_KEY` secret, model from the `AI_REVIEW_MODEL` variable) with the reviewer prompt in `.github/prompts/sql-review.md` and posts the answer as a sticky comment; advisory, the human decides. Without the secret the job says so and stays green |
 | `snowflake-checks` | on demand and weekly: key-pair login with a read-only service user, runs uniqueness / referential / reconciliation checks against `OLIST.MARTS`; can run on a self-hosted runner by setting the `SNOWFLAKE_RUNNER` variable |
 
 Plus: Dependabot for pip and Actions, CODEOWNERS, PR and issue templates, `pre-commit` with SQLFluff and
