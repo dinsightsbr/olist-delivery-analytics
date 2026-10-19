@@ -129,6 +129,10 @@ DIVIDE (
 -- "Share of late reviews" uses is_late = TRUE(). Plotting the two measures gives a clean legend.
 
 On-time Delivery % (min 100 orders) = IF ( [Orders] >= 100, [On-time Delivery %] )
+
+Share of Late Orders = DIVIDE ( [Late Orders], CALCULATE ( [Late Orders], ALL ( DIM_CUSTOMER ) ) )
+-- "Where is the pool?": the state's share of every late order in the period. Rate (On-time %) says
+-- how bad; share says how big. Rio is the second-largest pool after São Paulo.
 -- Blanks tiny states (RR, AP, AC) out of rankings without a visual-level filter.
 
 Low Reviews from Late Orders % =

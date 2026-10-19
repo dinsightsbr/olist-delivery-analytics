@@ -1,11 +1,11 @@
 table Recommendations
-	lineageTag: 026b8fab-8924-5086-a785-2bcf106ffec5
+	lineageTag: 80666380-8413-5508-99f7-8a45be4199e9
 
 	column No
 		dataType: int64
 		formatString: 0
 		isNameInferred
-		lineageTag: 80666380-8413-5508-99f7-8a45be4199e9
+		lineageTag: b31417db-370b-5db7-8081-07a47f838c0e
 		summarizeBy: none
 		sourceColumn: [No]
 
@@ -14,7 +14,7 @@ table Recommendations
 	column Action
 		dataType: string
 		isNameInferred
-		lineageTag: b31417db-370b-5db7-8081-07a47f838c0e
+		lineageTag: 4279d607-b579-5594-b438-6a7f8e2f46f4
 		summarizeBy: none
 		sourceColumn: [Action]
 
@@ -23,7 +23,7 @@ table Recommendations
 	column Target
 		dataType: string
 		isNameInferred
-		lineageTag: 4279d607-b579-5594-b438-6a7f8e2f46f4
+		lineageTag: a71cdab9-7d97-5b4c-b573-6cfc1dca337c
 		summarizeBy: none
 		sourceColumn: [Target]
 
@@ -33,7 +33,7 @@ table Recommendations
 		dataType: int64
 		formatString: 0
 		isNameInferred
-		lineageTag: a71cdab9-7d97-5b4c-b573-6cfc1dca337c
+		lineageTag: aab97762-688d-5d42-9b9f-74417c6e163c
 		summarizeBy: none
 		sourceColumn: [Effort]
 
@@ -43,7 +43,7 @@ table Recommendations
 		dataType: int64
 		formatString: 0
 		isNameInferred
-		lineageTag: aab97762-688d-5d42-9b9f-74417c6e163c
+		lineageTag: b96e312a-2380-5b86-bc7d-ddefd7c29539
 		summarizeBy: none
 		sourceColumn: [Impact]
 
@@ -51,11 +51,11 @@ table Recommendations
 
 	measure 'Effort (1-5)' = MAX ( Recommendations[Effort] )
 		formatString: 0
-		lineageTag: b96e312a-2380-5b86-bc7d-ddefd7c29539
+		lineageTag: ec56f223-0a8a-5f42-96ec-28152b85c665
 
 	measure 'Impact (1-5)' = MAX ( Recommendations[Impact] )
 		formatString: 0
-		lineageTag: ec56f223-0a8a-5f42-96ec-28152b85c665
+		lineageTag: 4508a263-e282-5760-b1f4-816ac6f51958
 
 	partition Recommendations = calculated
 		mode: import
