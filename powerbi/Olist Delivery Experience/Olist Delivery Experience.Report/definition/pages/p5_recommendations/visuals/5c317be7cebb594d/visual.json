@@ -1,0 +1,96 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "5c317be7cebb594d",
+  "position": {
+    "x": 1175,
+    "y": 285,
+    "width": 395,
+    "height": 372,
+    "z": 12,
+    "tabOrder": 12
+  },
+  "visual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Why these, in this order",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "1 Rio: the largest pool of late orders that one carrier conversation can fix; it is late even on local deliveries (page 3). 2 Northeast: 19-25 day lead times and 12-22% late rates are a network and promise problem, so promises and partners are set by lane. 3 Proactive message: the cheapest lever; it targets the 62% bad-review rate of late orders while logistics is fixed. 4 Audit: ~1,100 orders are 'delivered on time' in the system while the customer says nothing arrived. 5-6 keep the fix visible and size the other complaint themes.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The what-if: move the slider to assume a share of late orders had arrived on time; those orders take the on-time average score. Filter to a region or state to see where the gain concentrates.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#718096"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "expr": {
+                "Literal": {
+                  "Value": "'#1A202C'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

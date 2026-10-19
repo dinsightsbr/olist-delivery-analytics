@@ -8,121 +8,150 @@ table DIM_DATE
 		formatString: 0
 		lineageTag: 6e61d877-1168-532e-84a7-e6d81667b754
 		summarizeBy: none
-		sourceColumn: DATE_KEY
+		sourceColumn: date_key
 
 		annotation SummarizationSetBy = User
 
-	column date
+	column Date
 		dataType: dateTime
 		isKey
 		formatString: Short Date
 		lineageTag: 6bd338de-5da2-5ce6-b548-01278bbb94ab
 		summarizeBy: none
-		sourceColumn: DATE
+		sourceColumn: Date
 
 		annotation SummarizationSetBy = User
 
-	column year
+	column Year
 		dataType: int64
 		formatString: 0
 		lineageTag: c4274eef-1407-5f37-a23f-0eb073ec938d
 		summarizeBy: none
-		sourceColumn: YEAR
+		sourceColumn: Year
 
 		annotation SummarizationSetBy = User
 
-	column quarter
+	column 'Quarter No'
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: b0c82d00-3733-53df-a475-d424485f2d47
 		summarizeBy: none
-		sourceColumn: QUARTER
+		sourceColumn: Quarter No
 
 		annotation SummarizationSetBy = User
 
-	column quarter_label
+	column Quarter
 		dataType: string
 		lineageTag: 85af8ad8-f54e-504a-a48c-11c1a12ddbce
 		summarizeBy: none
-		sourceColumn: QUARTER_LABEL
+		sourceColumn: Quarter
 
 		annotation SummarizationSetBy = User
 
-	column month
+	column 'Month No'
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 93a808fd-5fc1-520d-b692-e2f72d2d0359
 		summarizeBy: none
-		sourceColumn: MONTH
+		sourceColumn: Month No
 
 		annotation SummarizationSetBy = User
 
-	column month_short
+	column 'Month (short)'
 		dataType: string
 		lineageTag: 5026dbc5-84fb-5fd6-9201-3fbfef6989d0
 		summarizeBy: none
-		sourceColumn: MONTH_SHORT
-		sortByColumn: month
+		sourceColumn: Month (short)
+		sortByColumn: 'Month No'
 
 		annotation SummarizationSetBy = User
 
-	column year_month
+	column Month
 		dataType: string
 		lineageTag: 47efc4b9-565f-5460-9e53-c7e0328501ac
 		summarizeBy: none
-		sourceColumn: YEAR_MONTH
+		sourceColumn: Month
 
 		annotation SummarizationSetBy = User
 
 	column month_start
 		dataType: dateTime
+		isHidden
 		formatString: Short Date
 		lineageTag: 614a6ef5-ac71-5dc1-9bde-a550c4779955
 		summarizeBy: none
-		sourceColumn: MONTH_START
+		sourceColumn: month_start
 
 		annotation SummarizationSetBy = User
 
 	column day_of_week_iso
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 23c9718d-3759-57a8-8534-ad095b27eacb
 		summarizeBy: none
-		sourceColumn: DAY_OF_WEEK_ISO
+		sourceColumn: day_of_week_iso
 
 		annotation SummarizationSetBy = User
 
-	column day_short
+	column Weekday
 		dataType: string
 		lineageTag: 18869a4d-4551-5537-b497-a7ea8233c339
 		summarizeBy: none
-		sourceColumn: DAY_SHORT
+		sourceColumn: Weekday
 		sortByColumn: day_of_week_iso
 
 		annotation SummarizationSetBy = User
 
-	column is_weekend
+	column 'Weekend?'
 		dataType: boolean
 		lineageTag: f7c6f8ee-3c4f-5685-b30b-66e439b6eca3
 		summarizeBy: none
-		sourceColumn: IS_WEEKEND
+		sourceColumn: Weekend?
 
 		annotation SummarizationSetBy = User
 
 	column iso_week
 		dataType: int64
+		isHidden
 		formatString: 0
 		lineageTag: 7c5147a0-b557-5761-b506-85b2ead58cbe
 		summarizeBy: none
-		sourceColumn: ISO_WEEK
+		sourceColumn: iso_week
 
 		annotation SummarizationSetBy = User
 
-	column in_analysis_window
+	column 'In Analysis Window'
 		dataType: boolean
 		lineageTag: 0c9f7bab-daa6-5008-bc7f-6fc1de7af293
 		summarizeBy: none
-		sourceColumn: IN_ANALYSIS_WINDOW
+		sourceColumn: In Analysis Window
+
+		annotation SummarizationSetBy = User
+
+	column Holiday = LOOKUPVALUE ( Holidays[Holiday], Holidays[Date], DIM_DATE[Date] )
+		dataType: string
+		isDataTypeInferred
+		lineageTag: e829baf7-fd56-50a6-a0ae-cf9d0cd29cd4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column 'Near Holiday?' = VAR _d = DIM_DATE[Date] RETURN COUNTROWS ( FILTER ( Holidays, ABS ( DATEDIFF ( Holidays[Date], _d, DAY ) ) <= 3 ) ) > 0
+		dataType: boolean
+		isDataTypeInferred
+		lineageTag: 6cff6797-a55d-5994-9ddf-b663c4244477
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+	column 'Purchase Period' = VAR _d = DIM_DATE[Date] VAR _near = COUNTROWS ( FILTER ( Holidays, ABS ( DATEDIFF ( Holidays[Date], _d, DAY ) ) <= 3 ) ) > 0 RETURN IF ( _near, "Holiday week (±3 days)", "Regular week" )
+		dataType: string
+		isDataTypeInferred
+		lineageTag: 2bff29cf-d3ea-5f6f-a43b-c1ccbcfdf45c
+		summarizeBy: none
 
 		annotation SummarizationSetBy = User
 
@@ -134,7 +163,8 @@ table DIM_DATE
 				    Database = Source{[Name = "OLIST", Kind = "Database"]}[Data],
 				    Schema = Database{[Name = "MARTS", Kind = "Schema"]}[Data],
 				    Data = Schema{[Name = "DIM_DATE", Kind = "Table"]}[Data],
-				    Typed = Table.TransformColumnTypes(Data, {{"DATE_KEY", Int64.Type}, {"DATE", type date}, {"YEAR", Int64.Type}, {"QUARTER", Int64.Type}, {"QUARTER_LABEL", type text}, {"MONTH", Int64.Type}, {"MONTH_SHORT", type text}, {"YEAR_MONTH", type text}, {"MONTH_START", type date}, {"DAY_OF_WEEK_ISO", Int64.Type}, {"DAY_SHORT", type text}, {"IS_WEEKEND", type logical}, {"ISO_WEEK", Int64.Type}, {"IN_ANALYSIS_WINDOW", type logical}})
+				    Typed = Table.TransformColumnTypes(Data, {{"DATE_KEY", Int64.Type}, {"DATE", type date}, {"YEAR", Int64.Type}, {"QUARTER", Int64.Type}, {"QUARTER_LABEL", type text}, {"MONTH", Int64.Type}, {"MONTH_SHORT", type text}, {"YEAR_MONTH", type text}, {"MONTH_START", type date}, {"DAY_OF_WEEK_ISO", Int64.Type}, {"DAY_SHORT", type text}, {"IS_WEEKEND", type logical}, {"ISO_WEEK", Int64.Type}, {"IN_ANALYSIS_WINDOW", type logical}}),
+				    Renamed = Table.RenameColumns(Typed, {{"DATE_KEY", "date_key"}, {"DATE", "Date"}, {"YEAR", "Year"}, {"QUARTER", "Quarter No"}, {"QUARTER_LABEL", "Quarter"}, {"MONTH", "Month No"}, {"MONTH_SHORT", "Month (short)"}, {"YEAR_MONTH", "Month"}, {"MONTH_START", "month_start"}, {"DAY_OF_WEEK_ISO", "day_of_week_iso"}, {"DAY_SHORT", "Weekday"}, {"IS_WEEKEND", "Weekend?"}, {"ISO_WEEK", "iso_week"}, {"IN_ANALYSIS_WINDOW", "In Analysis Window"}})
 				in
-				    Typed
+				    Renamed
 

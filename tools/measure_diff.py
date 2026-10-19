@@ -1,8 +1,8 @@
 """
 measure_diff.py - Markdown diff of the semantic model between two git refs.
 
-Compares the TMDL measures (_Measures.tmdl) and relationships.tmdl, so a pull request
-shows exactly which business definitions changed. Used by the `model-diff` CI job.
+Compares the TMDL measures of every table under tables/ (measure-only tables included)
+and relationships.tmdl, so a pull request shows exactly which business definitions changed. Used by the `model-diff` CI job.
 
 Usage: python tools/measure_diff.py <base-ref> <head-ref>   (prints Markdown)
 """
@@ -11,7 +11,7 @@ import subprocess
 import sys
 
 MODEL = "powerbi/Olist Delivery Experience/Olist Delivery Experience.SemanticModel/definition"
-MEASURES = f"{MODEL}/tables/_Measures.tmdl"
+TABLES_DIR = f"{MODEL}/tables"
 RELATIONSHIPS = f"{MODEL}/relationships.tmdl"
 NL = "\n"
 
@@ -22,6 +22,23 @@ def show(ref: str, path: str) -> str:
                               text=True, encoding="utf-8").stdout
     except subprocess.CalledProcessError:
         return ""
+
+
+def list_tables(ref: str) -> list:
+    """TMDL table files present at a ref (the measure table was renamed once; never assume a name)."""
+    try:
+        out = subprocess.run(["git", "ls-tree", "-r", "--name-only", ref, "--", TABLES_DIR], check=True,
+                             capture_output=True, text=True, encoding="utf-8").stdout
+    except subprocess.CalledProcessError:
+        return []
+    return [p for p in out.splitlines() if p.endswith(".tmdl")]
+
+
+def measures_at(ref: str) -> dict:
+    out = {}
+    for path in list_tables(ref):
+        out.update(parse_measures(show(ref, path)))
+    return out
 
 
 def parse_measures(text: str) -> dict:
@@ -64,7 +81,7 @@ def code(expr: str, prefix: str = "") -> str:
 
 
 def main(base: str, head: str) -> None:
-    mb, mh = parse_measures(show(base, MEASURES)), parse_measures(show(head, MEASURES))
+    mb, mh = measures_at(base), measures_at(head)
     rb, rh = parse_relationships(show(base, RELATIONSHIPS)), parse_relationships(show(head, RELATIONSHIPS))
     added = sorted(set(mh) - set(mb))
     removed = sorted(set(mb) - set(mh))

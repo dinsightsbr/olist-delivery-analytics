@@ -1,0 +1,57 @@
+table Holidays
+	lineageTag: cc8269f0-51e7-5357-820f-dc98d8b12f06
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		isNameInferred
+		lineageTag: d573ca5c-d884-5a0c-b573-3123eb478ade
+		summarizeBy: none
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+	column Holiday
+		dataType: string
+		isNameInferred
+		lineageTag: 8064ea92-2adf-55de-8b8b-d5733f61a37d
+		summarizeBy: none
+		sourceColumn: [Holiday]
+
+		annotation SummarizationSetBy = User
+
+	partition Holidays = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Date", DATETIME, "Holiday", STRING,
+				    {
+				        { "2017-01-01", "New Year" },
+				        { "2017-02-27", "Carnival Monday" },
+				        { "2017-02-28", "Carnival Tuesday" },
+				        { "2017-04-14", "Good Friday" },
+				        { "2017-04-21", "Tiradentes" },
+				        { "2017-05-01", "Labour Day" },
+				        { "2017-06-15", "Corpus Christi" },
+				        { "2017-09-07", "Independence Day" },
+				        { "2017-10-12", "Our Lady of Aparecida" },
+				        { "2017-11-02", "All Souls" },
+				        { "2017-11-15", "Republic Day" },
+				        { "2017-11-24", "Black Friday" },
+				        { "2017-12-25", "Christmas" },
+				        { "2018-01-01", "New Year" },
+				        { "2018-02-12", "Carnival Monday" },
+				        { "2018-02-13", "Carnival Tuesday" },
+				        { "2018-03-30", "Good Friday" },
+				        { "2018-04-21", "Tiradentes" },
+				        { "2018-05-01", "Labour Day" },
+				        { "2018-05-31", "Corpus Christi" },
+				        { "2018-09-07", "Independence Day" },
+				        { "2018-10-12", "Our Lady of Aparecida" },
+				        { "2018-11-02", "All Souls" },
+				        { "2018-11-15", "Republic Day" },
+				        { "2018-11-23", "Black Friday" },
+				        { "2018-12-25", "Christmas" }
+				    }
+				)
+

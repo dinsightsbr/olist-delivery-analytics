@@ -1,0 +1,165 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "364f5315ee635b11",
+  "position": {
+    "x": 25,
+    "y": 169,
+    "width": 750,
+    "height": 711,
+    "z": 2,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Architecture",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "9 Kaggle CSVs land in OLIST.RAW (one table per file, all VARCHAR, replayable). OLIST.STG views type, rename and deduplicate to one row per business key (one review per order, payments aggregated to the order). OLIST.MARTS is a star schema materialized as tables: DIM_DATE, DIM_CUSTOMER (grain: customer_unique_id), DIM_SELLER, DIM_PRODUCT, FCT_ORDERS (grain: order) and FCT_ORDER_ITEMS (grain: item). A Snowflake SEMANTIC VIEW (SV_ORDERS) defines the KPIs once; the DAX measures mirror it name for name. In medallion terms: RAW is bronze, STG is silver, MARTS is gold.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Business rules",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Delivered = status 'delivered' with a customer delivery timestamp. Late = delivered after the estimated date (calendar days). Low review = score 1 or 2. Interstate = primary seller state differs from customer state. Analysis window = orders purchased Jan 2017 to Aug 2018 (edges of the dataset are sparse); applied in the Power Query partitions of both facts. Holidays, handling and transit days, cart size and first-order flags are computed in the model (DAX) on top of the warehouse columns.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Data quality checks (sql/90_checks.sql)",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Unique keys in every mart; row counts RAW = STG = MARTS; GMV reconciled to the cent (R$ 13,591,643.70) across RAW, FCT_ORDERS and FCT_ORDER_ITEMS; zero orphan keys; 775 canceled/unavailable orders without items kept and documented; review duplicates resolved to the latest answer per order; geolocation averaged per zip prefix inside the Brazil bounding box. The same checks run in CI against Snowflake with a read-only service user.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Governance",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Power BI connects in Import mode with the read-only role BI_READER, which can only see OLIST.MARTS, through a service user with key-pair authentication. Naming follows dbt conventions (stg_, dim_, fct_). The report is a Power BI Project (PBIP: TMDL + PBIR) generated from code and versioned in Git; every pull request runs SQL lint, schema validation and a semantic-model diff.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Every number reconciled against the warehouse before use.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#718096"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "expr": {
+                "Literal": {
+                  "Value": "'#1A202C'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

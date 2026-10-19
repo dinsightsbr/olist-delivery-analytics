@@ -93,7 +93,7 @@ def logo(light: bool) -> Image.Image:
 
 
 def main() -> None:
-    for w, h in ((1600, 900), (1600, 1200), (1600, 2000)):
+    for w, h in ((1600, 900), (1600, 1200), (1600, 1600), (1600, 2000)):
         background(w, h).save(OUT / f"bg_{w}x{h}.png", optimize=True)
     logo(light=True).save(OUT / "logo_rota.png")
     logo(light=False).save(OUT / "logo_rota_dark.png")

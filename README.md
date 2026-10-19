@@ -28,7 +28,7 @@ Dataset: [Olist Brazilian E-Commerce](https://www.kaggle.com/datasets/olistbr/br
 | Two different "where" problems | Rio de Janeiro: 2nd market, 87.8 % on time (same as Bahia, next door to the sellers). Northeast: 78–88 % on time, freight 20–26 % of GMV |
 | The promise is padded | customers are told 24 days and receive in 12.5; the problem is variance by lane, not the average |
 
-Full numbers, by-state table and the comment-theme analysis: [docs/findings.md](docs/findings.md).
+Full numbers, by-state table and the comment-theme analysis: [docs/findings.md](docs/findings.md). Pages: Executive Overview · Delivery & Customer Experience · Where it happens · Loyalty & Cohorts · Recommendations · Definitions · Appendix.
 
 <p align="center">
   <img src="docs/img/page2-delivery-experience.png" width="49%" alt="Delivery & Customer Experience page">
@@ -59,7 +59,7 @@ measures mirror the semantic view name for name; when they disagree, the SQL win
 ```
 sql/                 00_setup → 10_raw → 20_stg → 30_marts → 40_semantic → 90_checks (+ 50_cortex, optional)
 powerbi/
-  build_pbip.py      generates the PBIP (tables, 52 measures, 5 pages, theme, background)
+  build_pbip.py      generates the PBIP (12 tables, 67 measures, 7 pages, theme, backgrounds)
   validate_pbip.py   validates every report JSON against the official PBIR schemas
   measures.md        measure dictionary (human-readable twin of the TMDL)
   branding/          fictitious brand, page backgrounds (Pillow script)

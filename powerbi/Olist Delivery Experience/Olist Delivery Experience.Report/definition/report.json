@@ -37,6 +37,11 @@
           "name": "bg_1600x900.png",
           "path": "bg_1600x900.png",
           "type": "Image"
+        },
+        {
+          "name": "bg_1600x1600.png",
+          "path": "bg_1600x1600.png",
+          "type": "Image"
         }
       ]
     }
