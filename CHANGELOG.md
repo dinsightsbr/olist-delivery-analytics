@@ -15,6 +15,10 @@ All notable changes to this project are documented here. The format follows
 - Definitions page (metric dictionary driven by a DAX table) reachable from an info button on every page.
 - Display names for every column shown to users; Holidays table; measure-only `Measures` table.
 
+### Fixed
+- `tools/measure_diff.py` reads measures from every TMDL table, so the model diff on pull requests no longer
+  reports the renamed measure table as 53 removed measures.
+
 ## [0.2.0] - 2026-10-18
 
 ### Added
