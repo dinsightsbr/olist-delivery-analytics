@@ -142,6 +142,7 @@ base AS (
     o.delivered_to_carrier_at,
     o.delivered_to_customer_at,
     o.estimated_delivery_at,
+    oi.shipping_limit_at,
     (o.order_status = 'delivered' AND o.delivered_to_customer_at IS NOT NULL)        AS is_delivered,
     DATEDIFF('day', o.purchased_at::DATE, o.delivered_to_customer_at::DATE)           AS delivery_days,
     DATEDIFF('day', o.purchased_at::DATE, o.estimated_delivery_at::DATE)              AS estimated_days,
@@ -166,6 +167,8 @@ base AS (
   LEFT JOIN OLIST.STG.STG_REVIEWS   r ON r.order_id    = o.order_id
   LEFT JOIN OLIST.STG.STG_PAYMENTS  p ON p.order_id    = o.order_id
   LEFT JOIN OLIST.STG.STG_SELLERS   s ON s.seller_id   = i.primary_seller_id
+  LEFT JOIN OLIST.STG.STG_ORDER_ITEMS oi ON oi.order_id = o.order_id
+  WHERE TO_DATE(o.purchased_at) >= '2017-01-01'
 )
 SELECT
   order_id,
@@ -181,11 +184,14 @@ SELECT
   TO_NUMBER(TO_CHAR(delivered_to_customer_at, 'YYYYMMDD')) AS delivered_date_key,
   estimated_delivery_at,
   TO_NUMBER(TO_CHAR(estimated_delivery_at, 'YYYYMMDD'))   AS estimated_delivery_date_key,
+  shipping_limit_at,
+  IFF(delivered_to_carrier_at IS NULL OR shipping_limit_at IS NULL, NULL,
+      delivered_to_carrier_at > shipping_limit_at)         AS seller_shipped_late,
   is_delivered,
   delivery_days,
   estimated_days,
   delay_days,
-  IFF(is_delivered, delay_days > 0, NULL)                  AS is_late,
+  IFF(is_delivered, delivered_to_customer_at > estimated_delivery_at, NULL) AS is_late,
   CASE
     WHEN order_status IN ('canceled', 'unavailable')  THEN 'Canceled / unavailable'
     WHEN is_delivered AND delay_days <= 0             THEN 'On time'
@@ -202,7 +208,7 @@ SELECT
   END                                                      AS delivery_bucket_sort,
   review_id IS NOT NULL                                    AS has_review,
   review_score,
-  IFF(review_score IS NULL, NULL, review_score <= 2)       AS is_low_review,
+  COALESCE(review_score, 0) <= 2                           AS is_low_review,
   has_comment,
   review_created_at,
   payment_value,
