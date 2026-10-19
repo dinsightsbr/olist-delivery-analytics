@@ -31,13 +31,13 @@ table DIM_DATE
 
 		annotation SummarizationSetBy = User
 
-	column quarter
+	column 'Quarter No'
 		dataType: int64
 		isHidden
 		formatString: 0
 		lineageTag: b0c82d00-3733-53df-a475-d424485f2d47
 		summarizeBy: none
-		sourceColumn: quarter
+		sourceColumn: Quarter No
 
 		annotation SummarizationSetBy = User
 
@@ -49,13 +49,13 @@ table DIM_DATE
 
 		annotation SummarizationSetBy = User
 
-	column month
+	column 'Month No'
 		dataType: int64
 		isHidden
 		formatString: 0
 		lineageTag: 93a808fd-5fc1-520d-b692-e2f72d2d0359
 		summarizeBy: none
-		sourceColumn: month
+		sourceColumn: Month No
 
 		annotation SummarizationSetBy = User
 
@@ -64,7 +64,7 @@ table DIM_DATE
 		lineageTag: 5026dbc5-84fb-5fd6-9201-3fbfef6989d0
 		summarizeBy: none
 		sourceColumn: Month (short)
-		sortByColumn: month
+		sortByColumn: 'Month No'
 
 		annotation SummarizationSetBy = User
 
@@ -164,7 +164,7 @@ table DIM_DATE
 				    Schema = Database{[Name = "MARTS", Kind = "Schema"]}[Data],
 				    Data = Schema{[Name = "DIM_DATE", Kind = "Table"]}[Data],
 				    Typed = Table.TransformColumnTypes(Data, {{"DATE_KEY", Int64.Type}, {"DATE", type date}, {"YEAR", Int64.Type}, {"QUARTER", Int64.Type}, {"QUARTER_LABEL", type text}, {"MONTH", Int64.Type}, {"MONTH_SHORT", type text}, {"YEAR_MONTH", type text}, {"MONTH_START", type date}, {"DAY_OF_WEEK_ISO", Int64.Type}, {"DAY_SHORT", type text}, {"IS_WEEKEND", type logical}, {"ISO_WEEK", Int64.Type}, {"IN_ANALYSIS_WINDOW", type logical}}),
-				    Renamed = Table.RenameColumns(Typed, {{"DATE_KEY", "date_key"}, {"DATE", "Date"}, {"YEAR", "Year"}, {"QUARTER", "quarter"}, {"QUARTER_LABEL", "Quarter"}, {"MONTH", "month"}, {"MONTH_SHORT", "Month (short)"}, {"YEAR_MONTH", "Month"}, {"MONTH_START", "month_start"}, {"DAY_OF_WEEK_ISO", "day_of_week_iso"}, {"DAY_SHORT", "Weekday"}, {"IS_WEEKEND", "Weekend?"}, {"ISO_WEEK", "iso_week"}, {"IN_ANALYSIS_WINDOW", "In Analysis Window"}})
+				    Renamed = Table.RenameColumns(Typed, {{"DATE_KEY", "date_key"}, {"DATE", "Date"}, {"YEAR", "Year"}, {"QUARTER", "Quarter No"}, {"QUARTER_LABEL", "Quarter"}, {"MONTH", "Month No"}, {"MONTH_SHORT", "Month (short)"}, {"YEAR_MONTH", "Month"}, {"MONTH_START", "month_start"}, {"DAY_OF_WEEK_ISO", "day_of_week_iso"}, {"DAY_SHORT", "Weekday"}, {"IS_WEEKEND", "Weekend?"}, {"ISO_WEEK", "iso_week"}, {"IN_ANALYSIS_WINDOW", "In Analysis Window"}})
 				in
 				    Renamed
 

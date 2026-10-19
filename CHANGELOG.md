@@ -13,7 +13,7 @@ All notable changes to this project are documented here. The format follows
   sample comments by theme.
 - Pareto of late orders by state and same-state vs interstate matrix; volume-vs-late scatter by month.
 - Definitions page (metric dictionary driven by a DAX table) reachable from an info button on every page.
-- Display names for every column shown to users; Holidays table; measure-only `Measures` table.
+- Display names for every column shown to users; Holidays table; measure-only `Key Measures` table.
 
 ### Fixed
 - `tools/measure_diff.py` reads measures from every TMDL table, so the model diff on pull requests no longer

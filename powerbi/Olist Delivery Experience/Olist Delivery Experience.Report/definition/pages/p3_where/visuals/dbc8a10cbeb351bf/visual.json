@@ -1,0 +1,166 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "dbc8a10cbeb351bf",
+  "position": {
+    "x": 825,
+    "y": 675,
+    "width": 745,
+    "height": 204,
+    "z": 8,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DIM_CUSTOMER"
+                    }
+                  },
+                  "Property": "Customer State"
+                }
+              },
+              "queryRef": "DIM_CUSTOMER.Customer State",
+              "nativeQueryRef": "Customer State"
+            }
+          ]
+        },
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "FCT_ORDERS"
+                    }
+                  },
+                  "Property": "Interstate?"
+                }
+              },
+              "queryRef": "FCT_ORDERS.Interstate?",
+              "nativeQueryRef": "Interstate?"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Key Measures"
+                    }
+                  },
+                  "Property": "Late Delivery % (min 100 orders)"
+                }
+              },
+              "queryRef": "Key Measures.Late Delivery % (min 100 orders)",
+              "nativeQueryRef": "Late Delivery % (min 100 orders)"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "FillRule": {
+                      "Input": {
+                        "Measure": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Key Measures"
+                            }
+                          },
+                          "Property": "Late Delivery % (min 100 orders)"
+                        }
+                      },
+                      "FillRule": {
+                        "linearGradient2": {
+                          "min": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#FFFFFF'"
+                              }
+                            }
+                          },
+                          "max": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#C53030'"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Key Measures.Late Delivery % (min 100 orders)"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Same-state vs interstate late rate per state: Rio is late even on local deliveries'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "expr": {
+                "Literal": {
+                  "Value": "'#1A202C'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

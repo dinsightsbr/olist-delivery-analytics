@@ -31,7 +31,7 @@ DATABASE = "OLIST"
 SCHEMA = "MARTS"
 WINDOW = (20170101, 20180831)  # Jan-2017 .. Aug-2018, see DIM_DATE.in_analysis_window
 
-MEAS = "Measures"  # measure-only table (no columns), shows with the calculator icon in Desktop
+MEAS = "Key Measures"  # "Measures" alone is a reserved table name in Power BI Desktop  # measure-only table (no columns), shows with the calculator icon in Desktop
 
 NS = uuid.UUID("6f1b2c3d-4e5f-4a6b-8c7d-9e0f1a2b3c4d")
 _auto = 0
@@ -185,7 +185,7 @@ T_REVIEW_THEMES = [
 # Technical names stay in the Snowflake source; the generator renames on the way in and
 # rewrites every DAX reference, so measures keep using the technical names below.
 DISPLAY = {
-    "date": "Date", "year": "Year", "quarter_label": "Quarter", "month_short": "Month (short)",
+    "date": "Date", "year": "Year", "quarter": "Quarter No", "month": "Month No", "quarter_label": "Quarter", "month_short": "Month (short)",
     "year_month": "Month", "day_short": "Weekday", "is_weekend": "Weekend?", "in_analysis_window": "In Analysis Window",
     "customer_city": "Customer City", "customer_state": "Customer State", "customer_state_name": "Customer State Name",
     "customer_region": "Customer Region", "orders_count": "Orders per Customer", "is_repeat_customer": "Repeat Customer?",
@@ -547,7 +547,7 @@ MEASURES = [
 
 def tmdl_measures_table() -> str:
     """Measure-only table: a zero-column M partition, so Desktop shows the calculator icon."""
-    out = [f"table {MEAS}", f"\tlineageTag: {guid()}", ""]
+    out = [f"table {q(MEAS)}", f"\tlineageTag: {guid()}", ""]
     for name, expr, fmt, folder in MEASURES:
         out.append(f"\tmeasure {q(name)} =")
         for ln in dax(expr).split("\n"):
@@ -558,7 +558,7 @@ def tmdl_measures_table() -> str:
         out.append(f"\t\tdisplayFolder: {folder}")
         out.append("")
     out += [
-        f"\tpartition {MEAS} = m",
+        f"\tpartition {q(MEAS)} = m",
         "\t\tmode: import",
         "\t\tsource =",
         "\t\t\t\tlet",

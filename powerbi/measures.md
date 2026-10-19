@@ -35,7 +35,7 @@ DIM_PRODUCT[product_id]         1 ──< FCT_ORDER_ITEMS[product_id]
 - Mark `DIM_DATE` as the date table (`date` column). Hide `date_key` columns and all surrogate keys.
 - Sort by column: `delivery_bucket` by `delivery_bucket_sort`; `month_short` by `month`; `day_short` by `day_of_week_iso`.
 - Hide `FCT_ORDERS[review_score]` and `FCT_ORDER_ITEMS[review_score]` from report view (implicit averages are the wrong grain); expose them only through measures.
-- Create an empty table `_Measures` (Enter data, one dummy column, then hide it) and put every measure there, organised in the display folders below.
+- Put every measure in `Key Measures`, a measure-only table with no columns (its Power Query source returns an empty table, which is how Desktop shows the calculator icon). The bare name `Measures` is reserved by Desktop, so the table cannot be called that. Measures are organised in the display folders below.
 - Page-level filter on every page except the appendix: `DIM_DATE[in_analysis_window] = True` (Jan-2017 to Aug-2018). Documented in the appendix.
 
 ## 3. Measures
