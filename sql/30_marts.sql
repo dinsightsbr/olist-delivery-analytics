@@ -253,4 +253,23 @@ FROM OLIST.STG.STG_ORDER_ITEMS oi
 JOIN FCT_ORDERS f               ON f.order_id  = oi.order_id
 LEFT JOIN OLIST.STG.STG_SELLERS s ON s.seller_id = oi.seller_id;
 
+-- ---------------------------------------------------------- fct_seller_monthly
+-- Grain: one row per primary seller and purchase month. Feeds the seller page.
+create or replace table fct_seller_monthly
+  comment = 'Grain: one row per primary seller and purchase month. Orders, delivered, late, late rate, review and GMV.'
+as
+select
+  f.primary_seller_id as seller_id,
+  d.year_month,
+  count(1) as orders,
+  sum(iff(f.is_delivered, 1, 0)) as delivered_orders,
+  sum(iff(f.is_late, 1, 0)) as late_orders,
+  sum(iff(f.is_late, 1, 0)) / nullif(sum(iff(f.is_delivered, 1, 0)), 0) as late_rate,
+  avg(f.review_score) as avg_review_score,
+  sum(f.gmv) as gmv
+from fct_orders f
+join dim_date d on d.date_key = f.purchase_date_key
+where f.primary_seller_id is not null
+group by 1, 2
+
 SHOW TABLES IN SCHEMA OLIST.MARTS;
