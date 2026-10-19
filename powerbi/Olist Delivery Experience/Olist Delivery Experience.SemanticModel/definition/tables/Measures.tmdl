@@ -1,0 +1,490 @@
+table Measures
+	lineageTag: b2b804d1-4cdf-57ad-84b4-5bdee1f7007d
+
+	measure GMV =
+			SUM ( FCT_ORDERS[gmv] )
+		formatString: \R\$ #,0
+		lineageTag: b8dde5e6-630d-55c1-8c12-7f251b63d9ca
+		displayFolder: Sales
+
+	measure 'GMV (M)' =
+			DIVIDE ( [GMV], 1000000 )
+		formatString: \R\$ #,0.0\M
+		lineageTag: d1f06c3a-817a-594c-8f5d-9ef147dbcdfc
+		displayFolder: Sales
+
+	measure Orders =
+			COUNTROWS ( FCT_ORDERS )
+		formatString: #,0
+		lineageTag: f0bfbdd7-cef3-59e8-bdf7-7b05bdd6f317
+		displayFolder: Sales
+
+	measure 'Avg Order Value' =
+			DIVIDE ( [GMV], [Orders] )
+		formatString: \R\$ #,0.00
+		lineageTag: bb564614-af42-53ab-b736-56c3806c00e4
+		displayFolder: Sales
+
+	measure Customers =
+			DISTINCTCOUNT ( FCT_ORDERS[customer_unique_id] )
+		formatString: #,0
+		lineageTag: fc3f0896-2059-503e-b654-a569f9f52659
+		displayFolder: Sales
+
+	measure 'Customers (all time)' =
+			COUNTROWS ( DIM_CUSTOMER )
+		formatString: #,0
+		lineageTag: c4f913db-259a-5279-b06c-22dbe140a9c0
+		displayFolder: Sales
+
+	measure 'Items Sold' =
+			COUNTROWS ( FCT_ORDER_ITEMS )
+		formatString: #,0
+		lineageTag: 393c6151-c4bd-569b-95f3-a48be97a65cd
+		displayFolder: Sales
+
+	measure 'Items per Order' =
+			DIVIDE ( [Items Sold], [Orders] )
+		formatString: 0.00
+		lineageTag: e8e12d4d-495d-5f2a-a005-68dd5a8dd02f
+		displayFolder: Sales
+
+	measure 'GMV (Items)' =
+			SUM ( FCT_ORDER_ITEMS[price] )
+		formatString: \R\$ #,0
+		lineageTag: 247b2fc6-fd1f-5a6b-ba9c-dd1cedfd285b
+		displayFolder: Sales
+
+	measure 'GMV MoM %' =
+			VAR _prev = CALCULATE ( [GMV], DATEADD ( DIM_DATE[Date], -1, MONTH ) )
+			RETURN DIVIDE ( [GMV] - _prev, _prev )
+		formatString: 0.0%
+		lineageTag: be1bbd37-9387-594b-8065-d9a79a96c015
+		displayFolder: Sales
+
+	measure 'Delivered Orders' =
+			CALCULATE ( [Orders], FCT_ORDERS[is_delivered] = TRUE () )
+		formatString: #,0
+		lineageTag: 3a84ace1-b3fe-541d-a072-815cba4d7719
+		displayFolder: Delivery
+
+	measure 'Late Orders' =
+			CALCULATE ( [Orders], FCT_ORDERS[Late?] = TRUE () )
+		formatString: #,0
+		lineageTag: 1bf9905d-2323-53de-8823-acdf4accdc58
+		displayFolder: Delivery
+
+	measure 'On-time Delivery %' =
+			DIVIDE ( [Delivered Orders] - [Late Orders], [Delivered Orders] )
+		formatString: 0.0%
+		lineageTag: 2f4451ed-b582-5a0f-add5-5515c9b67629
+		displayFolder: Delivery
+
+	measure 'Late Delivery %' =
+			DIVIDE ( [Late Orders], [Delivered Orders] )
+		formatString: 0.0%
+		lineageTag: abd74527-5d30-5396-9f28-77cf6e65b0d7
+		displayFolder: Delivery
+
+	measure 'Avg Delivery Days' =
+			CALCULATE ( AVERAGE ( FCT_ORDERS[delivery_days] ), FCT_ORDERS[is_delivered] = TRUE () )
+		formatString: 0.0
+		lineageTag: 7f2f630b-b369-5d25-b62b-97aae42d57c8
+		displayFolder: Delivery
+
+	measure 'Avg Estimated Days' =
+			CALCULATE ( AVERAGE ( FCT_ORDERS[estimated_days] ), FCT_ORDERS[is_delivered] = TRUE () )
+		formatString: 0.0
+		lineageTag: a8943801-79ba-586e-87b7-da9f5db8c9b6
+		displayFolder: Delivery
+
+	measure 'Avg Delay Days (late only)' =
+			CALCULATE ( AVERAGE ( FCT_ORDERS[delay_days] ), FCT_ORDERS[Late?] = TRUE () )
+		formatString: 0.0
+		lineageTag: d0bf4c0a-5135-52d5-b1f5-3ccf9e47bfca
+		displayFolder: Delivery
+
+	measure 'Avg Seller Handling Days' =
+			CALCULATE ( AVERAGE ( FCT_ORDERS[Seller Handling Days] ), FCT_ORDERS[is_delivered] = TRUE () )
+		formatString: 0.0
+		lineageTag: 642d414b-b812-5efd-acec-14f673c5b073
+		displayFolder: Delivery
+
+	measure 'Avg Carrier Transit Days' =
+			CALCULATE ( AVERAGE ( FCT_ORDERS[Carrier Transit Days] ), FCT_ORDERS[is_delivered] = TRUE () )
+		formatString: 0.0
+		lineageTag: a49797e3-bd74-5c67-ab74-131cfee8f17c
+		displayFolder: Delivery
+
+	measure 'Interstate Orders %' =
+			DIVIDE (
+			    CALCULATE ( [Orders], FCT_ORDERS[Interstate?] = TRUE () ),
+			    CALCULATE ( [Orders], NOT ISBLANK ( FCT_ORDERS[Interstate?] ) )
+			)
+		formatString: 0.0%
+		lineageTag: 42a0baae-88a0-5012-955e-861bf519bd89
+		displayFolder: Delivery
+
+	measure 'Late Delivery % (Items)' =
+			DIVIDE (
+			    CALCULATE ( [Items Sold], FCT_ORDER_ITEMS[Late?] = TRUE () ),
+			    CALCULATE ( [Items Sold], FCT_ORDER_ITEMS[is_delivered] = TRUE () )
+			)
+		formatString: 0.0%
+		lineageTag: 3ce3c93f-33fa-59a3-8322-ced66f0fc75b
+		displayFolder: Delivery
+
+	measure 'Late Delivery % (Items, min 500)' =
+			IF ( [Items Sold] >= 500, [Late Delivery % (Items)] )
+		formatString: 0.0%
+		lineageTag: 6e5b3ff8-a370-55a9-adf0-8a966c79c8c5
+		displayFolder: Delivery
+
+	measure 'On-time Delivery % (min 100 orders)' =
+			IF ( [Orders] >= 100, [On-time Delivery %] )
+		formatString: 0.0%
+		lineageTag: dcc86e7c-576c-50b0-acc9-f1e78d246af9
+		displayFolder: Delivery
+
+	measure 'Late Delivery % (min 100 orders)' =
+			IF ( [Orders] >= 100, [Late Delivery %] )
+		formatString: 0.0%
+		lineageTag: 25882d3d-d8c8-59d7-a939-3fd1ca510001
+		displayFolder: Delivery
+
+	measure 'Share of Late Orders' =
+			DIVIDE ( [Late Orders], CALCULATE ( [Late Orders], ALL ( DIM_CUSTOMER ) ) )
+		formatString: 0.0%
+		lineageTag: da34ffbd-ed3d-5ec7-b874-922d06e58ca7
+		displayFolder: Delivery
+
+	measure 'Cumulative Share of Late Orders' =
+			VAR _cur = [Late Orders]
+			VAR _states = ALLSELECTED ( DIM_CUSTOMER[Customer State] )
+			VAR _total = CALCULATE ( [Late Orders], _states )
+			VAR _cum = SUMX ( FILTER ( _states, [Late Orders] >= _cur ), [Late Orders] )
+			RETURN DIVIDE ( _cum, _total )
+		formatString: 0%
+		lineageTag: e3cf2081-7f03-5784-ad7d-06440c32c0d5
+		displayFolder: Delivery
+
+	measure 'States for 80% of Late Orders' =
+			COUNTROWS (
+			    FILTER (
+			        ALLSELECTED ( DIM_CUSTOMER[Customer State] ),
+			        [Cumulative Share of Late Orders] - [Share of Late Orders] < 0.8 && [Late Orders] > 0
+			    )
+			)
+		formatString: 0
+		lineageTag: 9b3f2d7e-4d9f-58d3-87a2-831c5001bd77
+		displayFolder: Delivery
+
+	measure Reviews =
+			CALCULATE ( [Orders], FCT_ORDERS[has_review] = TRUE () )
+		formatString: #,0
+		lineageTag: d681081a-62d9-5353-9e05-6105302a0111
+		displayFolder: Experience
+
+	measure 'Avg Review Score' =
+			AVERAGE ( FCT_ORDERS[review_score] )
+		formatString: 0.00
+		lineageTag: 26df6365-4bab-598b-9658-6c2400ce78f8
+		displayFolder: Experience
+
+	measure 'Avg Review Score (Items)' =
+			AVERAGE ( FCT_ORDER_ITEMS[review_score] )
+		formatString: 0.00
+		lineageTag: c8121ed7-ba2f-59cd-ab31-e71cd66ba307
+		displayFolder: Experience
+
+	measure 'Low Reviews (1-2)' =
+			CALCULATE ( [Orders], FCT_ORDERS[is_low_review] = TRUE () )
+		formatString: #,0
+		lineageTag: 349d5054-3c81-53c9-8618-fb9f0caaa77e
+		displayFolder: Experience
+
+	measure 'Low Review %' =
+			DIVIDE ( [Low Reviews (1-2)], [Reviews] )
+		formatString: 0.0%
+		lineageTag: 9b21a629-9717-577d-958e-e956b4977bc0
+		displayFolder: Experience
+
+	measure '5-star %' =
+			DIVIDE ( CALCULATE ( [Orders], FCT_ORDERS[review_score] = 5 ), [Reviews] )
+		formatString: 0.0%
+		lineageTag: 0b4c64cd-a6f1-5cf4-aac2-09ac9d194c07
+		displayFolder: Experience
+
+	measure 'Avg Review Score (On time)' =
+			CALCULATE ( [Avg Review Score], FCT_ORDERS[Delivery Outcome] = "On time" )
+		formatString: 0.00
+		lineageTag: 63ac9c41-65b4-5755-b39f-ce75715dbaca
+		displayFolder: Experience
+
+	measure 'Avg Review Score (Late)' =
+			CALCULATE ( [Avg Review Score], FCT_ORDERS[Late?] = TRUE () )
+		formatString: 0.00
+		lineageTag: 745048fe-ca8c-5ebe-abb5-75c51a75ff0b
+		displayFolder: Experience
+
+	measure 'Review Gap (On time - Late)' =
+			[Avg Review Score (On time)] - [Avg Review Score (Late)]
+		formatString: 0.00
+		lineageTag: ea72a316-e862-58a9-ab45-0eb18ef55520
+		displayFolder: Experience
+
+	measure 'Low Review % (On time)' =
+			CALCULATE ( [Low Review %], FCT_ORDERS[Delivery Outcome] = "On time" )
+		formatString: 0.0%
+		lineageTag: 11e3892b-f5a2-5bda-902d-b5fd4f4e25b6
+		displayFolder: Experience
+
+	measure 'Low Review % (Late)' =
+			CALCULATE ( [Low Review %], FCT_ORDERS[Late?] = TRUE () )
+		formatString: 0.0%
+		lineageTag: c32ff0dc-b805-5a65-b618-c30879f758f2
+		displayFolder: Experience
+
+	measure 'Low Reviews from Late Orders %' =
+			DIVIDE (
+			    CALCULATE ( [Orders], FCT_ORDERS[is_low_review] = TRUE (), FCT_ORDERS[Late?] = TRUE () ),
+			    [Low Reviews (1-2)]
+			)
+		formatString: 0.0%
+		lineageTag: e8d0bd48-e43f-5b2b-a5bb-977537b9cc9f
+		displayFolder: Experience
+
+	measure 'Share of on-time reviews' =
+			DIVIDE (
+			    CALCULATE ( [Reviews], FCT_ORDERS[Delivery Outcome] = "On time" ),
+			    CALCULATE ( [Reviews], FCT_ORDERS[Delivery Outcome] = "On time", ALL ( FCT_ORDERS[review_score] ) )
+			)
+		formatString: 0.0%
+		lineageTag: 801ca798-e47b-57d9-acfd-10f713a50d3d
+		displayFolder: Experience
+
+	measure 'Share of late reviews' =
+			DIVIDE (
+			    CALCULATE ( [Reviews], FCT_ORDERS[Late?] = TRUE () ),
+			    CALCULATE ( [Reviews], FCT_ORDERS[Late?] = TRUE (), ALL ( FCT_ORDERS[review_score] ) )
+			)
+		formatString: 0.0%
+		lineageTag: a8acba8c-0199-52e5-8031-a49c88c28200
+		displayFolder: Experience
+
+	measure 'Low Review Comments' =
+			COUNTROWS ( REVIEW_THEMES_RULES )
+		formatString: #,0
+		lineageTag: 1a24491b-d99c-56f8-80d8-f4e66e7e7d63
+		displayFolder: Experience
+
+	measure 'Repeat Customer %' =
+			DIVIDE (
+			    CALCULATE ( COUNTROWS ( DIM_CUSTOMER ), DIM_CUSTOMER[Repeat Customer?] = TRUE () ),
+			    COUNTROWS ( DIM_CUSTOMER )
+			)
+		formatString: 0.0%
+		lineageTag: eb981f96-0293-5a28-ad93-ebf1e6aa403c
+		displayFolder: Loyalty
+
+	measure 'Repeat Customers' =
+			CALCULATE ( COUNTROWS ( DIM_CUSTOMER ), DIM_CUSTOMER[Repeat Customer?] = TRUE () )
+		formatString: #,0
+		lineageTag: 635b94b3-2140-5ed1-836e-41868a1f7d81
+		displayFolder: Loyalty
+
+	measure 'First Orders' =
+			CALCULATE ( [Orders], FCT_ORDERS[Is First Order] = TRUE () )
+		formatString: #,0
+		lineageTag: 5aa1e9f7-c3b1-5d8b-8a42-531c912d7493
+		displayFolder: Loyalty
+
+	measure 'Avg Review Score (First Orders)' =
+			CALCULATE ( [Avg Review Score], FCT_ORDERS[Is First Order] = TRUE () )
+		formatString: 0.00
+		lineageTag: 3b7b68fc-ebbb-5e97-a16e-780c6be0c7e8
+		displayFolder: Loyalty
+
+	measure 'Repeat Rate after On-time First Order' =
+			VAR _c =
+			    CALCULATETABLE (
+			        VALUES ( FCT_ORDERS[customer_unique_id] ),
+			        FCT_ORDERS[Is First Order] = TRUE (), FCT_ORDERS[Delivery Outcome] = "On time"
+			    )
+			RETURN
+			    DIVIDE (
+			        CALCULATE ( COUNTROWS ( DIM_CUSTOMER ), DIM_CUSTOMER[Repeat Customer?] = TRUE (), TREATAS ( _c, DIM_CUSTOMER[customer_unique_id] ) ),
+			        COUNTROWS ( _c )
+			    )
+		formatString: 0.0%
+		lineageTag: cd9478de-ba77-5fdf-afd4-3176734ba382
+		displayFolder: Loyalty
+
+	measure 'Repeat Rate after Late First Order' =
+			VAR _c =
+			    CALCULATETABLE (
+			        VALUES ( FCT_ORDERS[customer_unique_id] ),
+			        FCT_ORDERS[Is First Order] = TRUE (), FCT_ORDERS[Late?] = TRUE ()
+			    )
+			RETURN
+			    DIVIDE (
+			        CALCULATE ( COUNTROWS ( DIM_CUSTOMER ), DIM_CUSTOMER[Repeat Customer?] = TRUE (), TREATAS ( _c, DIM_CUSTOMER[customer_unique_id] ) ),
+			        COUNTROWS ( _c )
+			    )
+		formatString: 0.0%
+		lineageTag: 026b8fab-8924-5086-a785-2bcf106ffec5
+		displayFolder: Loyalty
+
+	measure 'Repeat Rate after Low-review First Order' =
+			VAR _c =
+			    CALCULATETABLE (
+			        VALUES ( FCT_ORDERS[customer_unique_id] ),
+			        FCT_ORDERS[Is First Order] = TRUE (), FCT_ORDERS[is_low_review] = TRUE ()
+			    )
+			RETURN
+			    DIVIDE (
+			        CALCULATE ( COUNTROWS ( DIM_CUSTOMER ), DIM_CUSTOMER[Repeat Customer?] = TRUE (), TREATAS ( _c, DIM_CUSTOMER[customer_unique_id] ) ),
+			        COUNTROWS ( _c )
+			    )
+		formatString: 0.0%
+		lineageTag: 80666380-8413-5508-99f7-8a45be4199e9
+		displayFolder: Loyalty
+
+	measure 'Freight Value' =
+			SUM ( FCT_ORDERS[freight_value] )
+		formatString: \R\$ #,0
+		lineageTag: b31417db-370b-5db7-8081-07a47f838c0e
+		displayFolder: Freight
+
+	measure 'Freight % of GMV' =
+			DIVIDE ( [Freight Value], [GMV] )
+		formatString: 0.0%
+		lineageTag: 4279d607-b579-5594-b438-6a7f8e2f46f4
+		displayFolder: Freight
+
+	measure 'Freight per Order' =
+			DIVIDE ( [Freight Value], [Orders] )
+		formatString: \R\$ #,0.00
+		lineageTag: a71cdab9-7d97-5b4c-b573-6cfc1dca337c
+		displayFolder: Freight
+
+	measure 'Freight % of GMV (Items)' =
+			DIVIDE ( SUM ( FCT_ORDER_ITEMS[freight_value] ), SUM ( FCT_ORDER_ITEMS[price] ) )
+		formatString: 0.0%
+		lineageTag: aab97762-688d-5d42-9b9f-74417c6e163c
+		displayFolder: Freight
+
+	measure 'Late Reduction % Value' =
+			SELECTEDVALUE ( 'Late Reduction %'[Late Reduction %], 50 )
+		formatString: 0
+		lineageTag: b96e312a-2380-5b86-bc7d-ddefd7c29539
+		displayFolder: Scenario
+
+	measure 'Scenario Avg Review Score' =
+			VAR _x = DIVIDE ( [Late Reduction % Value], 100 )
+			VAR _lateRev = CALCULATE ( [Reviews], FCT_ORDERS[Late?] = TRUE () )
+			VAR _moved = _lateRev * _x
+			VAR _totalScore = SUM ( FCT_ORDERS[review_score] )
+			VAR _newScore = _totalScore + _moved * ( [Avg Review Score (On time)] - [Avg Review Score (Late)] )
+			RETURN DIVIDE ( _newScore, [Reviews] )
+		formatString: 0.00
+		lineageTag: ec56f223-0a8a-5f42-96ec-28152b85c665
+		displayFolder: Scenario
+
+	measure 'Scenario Uplift' =
+			[Scenario Avg Review Score] - [Avg Review Score]
+		formatString: +0.00;-0.00;0.00
+		lineageTag: 4508a263-e282-5760-b1f4-816ac6f51958
+		displayFolder: Scenario
+
+	measure 'Scenario Low Reviews Avoided' =
+			VAR _x = DIVIDE ( [Late Reduction % Value], 100 )
+			VAR _lateRev = CALCULATE ( [Reviews], FCT_ORDERS[Late?] = TRUE () )
+			VAR _lowLate = DIVIDE ( CALCULATE ( [Low Reviews (1-2)], FCT_ORDERS[Late?] = TRUE () ), _lateRev )
+			VAR _lowOnTime = DIVIDE (
+			    CALCULATE ( [Low Reviews (1-2)], FCT_ORDERS[Delivery Outcome] = "On time" ),
+			    CALCULATE ( [Reviews], FCT_ORDERS[Delivery Outcome] = "On time" )
+			)
+			RETURN _lateRev * _x * ( _lowLate - _lowOnTime )
+		formatString: #,0
+		lineageTag: 8ed8b7b1-83be-544b-b3f0-f82aefad7e4e
+		displayFolder: Scenario
+
+	measure 'Scenario Late Orders Fixed' =
+			[Late Orders] * DIVIDE ( [Late Reduction % Value], 100 )
+		formatString: #,0
+		lineageTag: 61e3fd69-b9f4-5c9e-af92-20bfab77f640
+		displayFolder: Scenario
+
+	measure 'Title | Overview' =
+			FORMAT ( [Orders], "#,0" ) & " orders and R$ " & FORMAT ( [GMV] / 1e6, "0.0" ) & "M in GMV: "
+			    & FORMAT ( [Late Delivery %], "0.0%" ) & " of deliveries arrived late and the average review is "
+			    & FORMAT ( [Avg Review Score], "0.00" )
+		lineageTag: 116fa2dd-3749-5c6a-b943-23e2cc0fd3ec
+		displayFolder: Titles
+
+	measure 'Title | Delivery vs Experience' =
+			"Late deliveries score " & FORMAT ( [Avg Review Score (Late)], "0.00" ) & " stars vs "
+			    & FORMAT ( [Avg Review Score (On time)], "0.00" ) & " when on time; "
+			    & FORMAT ( [Low Reviews from Late Orders %], "0%" ) & " of all 1-2 star reviews come from late orders"
+		lineageTag: 620f3c0d-f08b-5f41-bb11-b315ce8600a1
+		displayFolder: Titles
+
+	measure 'Title | Time Split' =
+			"Where the days go: on-time orders spend " & FORMAT ( CALCULATE ( [Avg Seller Handling Days], FCT_ORDERS[Delivery Outcome] = "On time" ), "0.0" )
+			    & " days with the seller + " & FORMAT ( CALCULATE ( [Avg Carrier Transit Days], FCT_ORDERS[Delivery Outcome] = "On time" ), "0.0" )
+			    & " in transit; late orders " & FORMAT ( CALCULATE ( [Avg Seller Handling Days], FCT_ORDERS[Late?] = TRUE () ), "0.0" )
+			    & " + " & FORMAT ( CALCULATE ( [Avg Carrier Transit Days], FCT_ORDERS[Late?] = TRUE () ), "0.0" )
+		lineageTag: 1695e154-5a33-553e-af8d-9319e81e10d3
+		displayFolder: Titles
+
+	measure 'Title | Where' =
+			"Interstate routes run " & FORMAT ( CALCULATE ( [Late Delivery %], FCT_ORDERS[Interstate?] = TRUE () ), "0.0%" )
+			    & " late vs " & FORMAT ( CALCULATE ( [Late Delivery %], FCT_ORDERS[Interstate?] = FALSE (), FCT_ORDERS[is_delivered] = TRUE () ), "0.0%" )
+			    & " within the same state; the Northeast and Rio de Janeiro are the outliers"
+		lineageTag: 9405a7e3-7815-546f-adcc-b4e21e8a3df1
+		displayFolder: Titles
+
+	measure 'Title | Pareto' =
+			FORMAT ( [States for 80% of Late Orders], "0" ) & " states hold 80% of all late orders: fix the lanes, not the map"
+		lineageTag: 5ea8c058-8618-5817-a3a8-08b8170a168b
+		displayFolder: Titles
+
+	measure 'Title | Loyalty' =
+			"Customers whose first order arrived late come back " & FORMAT ( [Repeat Rate after Late First Order], "0.0%" )
+			    & " of the time, vs " & FORMAT ( [Repeat Rate after On-time First Order], "0.0%" ) & " after an on-time first order"
+		lineageTag: 9adadf48-ebb2-50ac-a90e-f89efca281a4
+		displayFolder: Titles
+
+	measure 'Title | Scenario' =
+			"Cutting late deliveries by " & FORMAT ( [Late Reduction % Value], "0" ) & "% lifts the average review from "
+			    & FORMAT ( [Avg Review Score], "0.00" ) & " to " & FORMAT ( [Scenario Avg Review Score], "0.00" )
+			    & " and avoids " & FORMAT ( [Scenario Low Reviews Avoided], "#,0" ) & " one- and two-star reviews"
+		lineageTag: b83f7176-6a03-54d1-99d4-b7f13d4e229e
+		displayFolder: Titles
+
+	measure 'Color | Delivery Bucket' =
+			SWITCH (
+			    SELECTEDVALUE ( FCT_ORDERS[Delivery Outcome] ),
+			    "On time", "#2B6CB0",
+			    "Late 1-7 days", "#DD6B20",
+			    "Late 8+ days", "#C53030",
+			    "Canceled / unavailable", "#A0AEC0",
+			    "#718096"
+			)
+		lineageTag: d6aa2522-a8a7-5388-94fc-15ddf02f6e18
+		displayFolder: Colors
+
+	measure 'Color | Late Flag' =
+			IF ( SELECTEDVALUE ( FCT_ORDERS[Late?] ) = TRUE (), "#C53030", "#2B6CB0" )
+		lineageTag: b69c730a-b56a-5831-ad39-281ccf1e0c66
+		displayFolder: Colors
+
+	partition Measures = m
+		mode: import
+		source =
+				let
+				    Source = #table({}, {})
+				in
+				    Source
+

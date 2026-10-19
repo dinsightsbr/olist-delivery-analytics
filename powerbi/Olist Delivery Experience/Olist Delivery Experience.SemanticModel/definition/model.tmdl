@@ -8,5 +8,5 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["SnowflakeServer", "SnowflakeWarehouse", "SnowflakeRole", "DIM_DATE", "DIM_CUSTOMER", "DIM_SELLER", "DIM_PRODUCT", "FCT_ORDERS", "FCT_ORDER_ITEMS", "REVIEW_THEMES_RULES", "_Measures", "Late Reduction %", "Recommendations"]
+annotation PBI_QueryOrder = ["SnowflakeServer", "SnowflakeWarehouse", "SnowflakeRole", "DIM_DATE", "DIM_CUSTOMER", "DIM_SELLER", "DIM_PRODUCT", "FCT_ORDERS", "FCT_ORDER_ITEMS", "REVIEW_THEMES_RULES", "Measures", "Late Reduction %", "Recommendations", "Holidays", "Definitions"]
 

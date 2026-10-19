@@ -1,0 +1,96 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "fa0855960c16519e",
+  "position": {
+    "x": 825,
+    "y": 658,
+    "width": 745,
+    "height": 221,
+    "z": 13,
+    "tabOrder": 13
+  },
+  "visual": {
+    "visualType": "textbox",
+    "drillFilterOtherVisuals": true,
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "How to read this page",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "fontWeight": "bold",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Only 3 in 100 customers ever place a second order, so the business lives on first impressions. The three cards on the right split customers by what happened on their first order: delivered on time, delivered late, or rated 1-2 stars. If the repeat rate after a late first order is clearly lower, late deliveries are not only a review problem but a retention problem, and the carrier work on page 3 has a revenue case.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#1A202C"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Repeat status comes from the whole dataset (a customer may have returned after Aug 2018 is not visible), so the rates are conservative. Cohorts list customers by the month of their first purchase.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#718096"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "expr": {
+                "Literal": {
+                  "Value": "'#1A202C'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,70 @@
+table Definitions
+	lineageTag: 83a16828-cd04-5ef0-9998-d4d1450b6cb8
+
+	column Page
+		dataType: string
+		isNameInferred
+		lineageTag: 8a2860c7-ab86-5642-8674-68f32d9383bc
+		summarizeBy: none
+		sourceColumn: [Page]
+
+		annotation SummarizationSetBy = User
+
+	column Metric
+		dataType: string
+		isNameInferred
+		lineageTag: 1a8fdf2b-b895-502e-9564-5abcfbd30fd3
+		summarizeBy: none
+		sourceColumn: [Metric]
+
+		annotation SummarizationSetBy = User
+
+	column Definition
+		dataType: string
+		isNameInferred
+		lineageTag: e26ead5d-8524-5b71-a887-c8dd4ff58343
+		summarizeBy: none
+		sourceColumn: [Definition]
+
+		annotation SummarizationSetBy = User
+
+	column Rule
+		dataType: string
+		isNameInferred
+		lineageTag: e011bd6c-6164-5742-a88f-afb28b6cc9ed
+		summarizeBy: none
+		sourceColumn: [Rule]
+
+		annotation SummarizationSetBy = User
+
+	partition Definitions = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Page", STRING, "Metric", STRING, "Definition", STRING, "Rule", STRING,
+				    {
+				        { "Overview", "GMV", "Sum of item prices of the orders in the period (BRL). Freight is not included; no fees or taxes are deducted (the dataset has none).", "Sum of FCT_ORDERS[gmv]" },
+				        { "Overview", "Orders", "Count of orders purchased in the period, any status.", "COUNTROWS of FCT_ORDERS" },
+				        { "Overview", "Avg Order Value", "GMV divided by orders.", "GMV / Orders" },
+				        { "Overview", "On-time Delivery %", "Share of delivered orders that reached the customer on or before the estimated date. Canceled and in-transit orders are excluded from both sides.", "(Delivered - Late) / Delivered" },
+				        { "Overview", "Avg Review Score", "Average of the 1-5 star review, one review per order (the latest answer when there are several).", "AVERAGE of review_score" },
+				        { "Overview", "Repeat Customer %", "Customers with two or more orders over the whole dataset, divided by all customers. Not filtered by period.", "Customers with orders_count > 1 / customers" },
+				        { "Delivery", "Delivered", "Order status 'delivered' with a customer delivery timestamp.", "status = delivered AND delivered_to_customer_at IS NOT NULL" },
+				        { "Delivery", "Late", "Delivered after the estimated delivery date shown at checkout, in calendar days.", "delivered date > estimated date" },
+				        { "Delivery", "Delivery Outcome", "On time; Late 1-7 days; Late 8+ days; In progress; Canceled / unavailable.", "Buckets of delay_days and status" },
+				        { "Delivery", "Seller Handling Days", "Days between payment approval and the hand-over to the carrier.", "DATEDIFF(approved_at, delivered_to_carrier_at)" },
+				        { "Delivery", "Carrier Transit Days", "Days between the hand-over to the carrier and the delivery to the customer.", "DATEDIFF(delivered_to_carrier_at, delivered_to_customer_at)" },
+				        { "Delivery", "Near Holiday?", "Purchase date within 3 days of a Brazilian national holiday, Carnival or Black Friday.", "Holidays table, +-3 days" },
+				        { "Delivery", "Interstate?", "The main seller of the order is in a different state from the customer.", "seller state <> customer state" },
+				        { "Delivery", "Share of Late Orders", "The state's (or region's) share of every late order in the period.", "Late Orders / Late Orders (all states)" },
+				        { "Experience", "Low Review %", "Reviews with 1 or 2 stars divided by reviews.", "Low reviews / reviews" },
+				        { "Experience", "Complaint Theme", "Theme of each 1-2 star comment, assigned by keyword rules in Portuguese (not received, late, wrong or incomplete, defect, service, other).", "sql/50_cortex.sql, REVIEW_THEMES_RULES" },
+				        { "Loyalty", "Is First Order", "The customer's earliest order in the dataset.", "purchased_at = MIN per customer" },
+				        { "Loyalty", "Repeat Rate after Late First Order", "Among customers whose first order was late, the share that bought again (any time).", "Repeat customers / customers with a late first order" },
+				        { "Freight", "Freight % of GMV", "Freight charged to customers divided by GMV.", "Freight / GMV" },
+				        { "Scenario", "Late Reduction %", "What-if parameter: share of late orders assumed to be delivered on time.", "Slider 0-100" },
+				        { "Scenario", "Scenario Avg Review Score", "Moved orders receive the on-time average score instead of the late average; everything else unchanged.", "(total score + moved x (on-time avg - late avg)) / reviews" },
+				        { "Data", "Analysis window", "Orders purchased from Jan 2017 to Aug 2018; the edges of the dataset are sparse.", "Power Query filter on purchase_date_key" }
+				    }
+				)
+

@@ -1,11 +1,11 @@
 table Recommendations
-	lineageTag: 80666380-8413-5508-99f7-8a45be4199e9
+	lineageTag: 3f2fa915-c919-5795-83d2-af3e4cc5361f
 
 	column No
 		dataType: int64
 		formatString: 0
 		isNameInferred
-		lineageTag: b31417db-370b-5db7-8081-07a47f838c0e
+		lineageTag: 3bcec139-0a25-5015-bdab-e20b547a0d4a
 		summarizeBy: none
 		sourceColumn: [No]
 
@@ -14,7 +14,7 @@ table Recommendations
 	column Action
 		dataType: string
 		isNameInferred
-		lineageTag: 4279d607-b579-5594-b438-6a7f8e2f46f4
+		lineageTag: b7da3595-e749-5ad3-9cff-22f93c0c84ed
 		summarizeBy: none
 		sourceColumn: [Action]
 
@@ -23,7 +23,7 @@ table Recommendations
 	column Target
 		dataType: string
 		isNameInferred
-		lineageTag: a71cdab9-7d97-5b4c-b573-6cfc1dca337c
+		lineageTag: e6b8d944-6b41-540d-be26-b7bd6830143f
 		summarizeBy: none
 		sourceColumn: [Target]
 
@@ -33,7 +33,7 @@ table Recommendations
 		dataType: int64
 		formatString: 0
 		isNameInferred
-		lineageTag: aab97762-688d-5d42-9b9f-74417c6e163c
+		lineageTag: 0b67786d-aba6-5253-9b3c-459fdbb7a0a4
 		summarizeBy: none
 		sourceColumn: [Effort]
 
@@ -43,7 +43,7 @@ table Recommendations
 		dataType: int64
 		formatString: 0
 		isNameInferred
-		lineageTag: b96e312a-2380-5b86-bc7d-ddefd7c29539
+		lineageTag: 614262e6-0ce6-5988-a52e-9320177d42c2
 		summarizeBy: none
 		sourceColumn: [Impact]
 
@@ -51,11 +51,11 @@ table Recommendations
 
 	measure 'Effort (1-5)' = MAX ( Recommendations[Effort] )
 		formatString: 0
-		lineageTag: ec56f223-0a8a-5f42-96ec-28152b85c665
+		lineageTag: 39218d35-c7c1-55d2-bd3c-076737e1d20a
 
 	measure 'Impact (1-5)' = MAX ( Recommendations[Impact] )
 		formatString: 0
-		lineageTag: 4508a263-e282-5760-b1f4-816ac6f51958
+		lineageTag: 7efd604a-3011-5d52-9de7-d90aaef0b977
 
 	partition Recommendations = calculated
 		mode: import
@@ -63,12 +63,12 @@ table Recommendations
 				DATATABLE (
 				    "No", INTEGER, "Action", STRING, "Target", STRING, "Effort", INTEGER, "Impact", INTEGER,
 				    {
-				            { 1, "Carrier / last-mile review on the SP to RJ lanes", "RJ on-time from 87.8% to the 93% national average", 3, 5 },
-				            { 2, "Re-set delivery promises by lane for the Northeast; pick partners by lane reliability", "NE late rate under 10%", 4, 4 },
-				            { 3, "Proactive message + voucher when an order passes its estimated date", "Late-order low-review rate from 62% toward 9%", 1, 4 },
-				            { 4, "Delivery-confirmation audit: 'delivered on time' orders the customer never received", "Close the gap between delivered and received", 3, 3 },
-				            { 5, "Weekly late-orders alert by seller and lane from this model", "Keep the fix visible", 1, 2 },
-				            { 6, "Classify all review comments with Cortex; add a split-shipment flag for multi-seller orders", "Size the remaining themes", 2, 3 }
+				        { 1, "Carrier / last-mile review on the SP to RJ lanes", "RJ on-time from 87.8% to the 93% national average", 3, 5 },
+				        { 2, "Re-set delivery promises by lane for the Northeast; pick partners by lane reliability", "NE late rate under 10%", 4, 4 },
+				        { 3, "Proactive message + voucher when an order passes its estimated date", "Late-order low-review rate from 62% toward 9%", 1, 4 },
+				        { 4, "Delivery-confirmation audit: 'delivered on time' orders the customer never received", "Close the gap between delivered and received", 3, 3 },
+				        { 5, "Weekly late-orders alert by seller and lane from this model", "Keep the fix visible", 1, 2 },
+				        { 6, "Classify all review comments with an LLM; add a split-shipment flag for multi-seller orders", "Size the remaining themes", 2, 3 }
 				    }
 				)
 

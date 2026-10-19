@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/1.0.0/schema.json",
   "name": "p2_delivery_experience",
   "displayName": "Delivery & Customer Experience",
-  "displayOption": "FitToPage",
-  "height": 900,
+  "displayOption": "FitToWidth",
+  "height": 1600,
   "width": 1600,
   "objects": {
     "background": [
@@ -14,7 +14,7 @@
               "name": {
                 "expr": {
                   "Literal": {
-                    "Value": "'bg_1600x900.png'"
+                    "Value": "'bg_1600x1600.png'"
                   }
                 }
               },
@@ -23,7 +23,7 @@
                   "ResourcePackageItem": {
                     "PackageName": "RegisteredResources",
                     "PackageType": 1,
-                    "ItemName": "bg_1600x900.png"
+                    "ItemName": "bg_1600x1600.png"
                   }
                 }
               },

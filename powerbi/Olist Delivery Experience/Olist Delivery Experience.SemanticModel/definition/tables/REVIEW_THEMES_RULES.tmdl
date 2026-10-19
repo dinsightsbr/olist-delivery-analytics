@@ -1,11 +1,12 @@
 table REVIEW_THEMES_RULES
-	lineageTag: df912d38-eeac-5f13-b771-75d76d6d66ce
+	lineageTag: f7dbe363-2b51-50e8-951e-9ed17d93e271
 
 	column order_id
 		dataType: string
-		lineageTag: a829b320-490b-58bc-ac33-4db26adbac47
+		isHidden
+		lineageTag: 1a2c1b51-d63c-54cb-acc9-c21d249b04b9
 		summarizeBy: none
-		sourceColumn: ORDER_ID
+		sourceColumn: order_id
 
 		annotation SummarizationSetBy = User
 
@@ -13,41 +14,41 @@ table REVIEW_THEMES_RULES
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: de75d579-b3ce-5568-851b-8f1982799cb0
+		lineageTag: 9c7841c5-b00b-54a3-a206-fa239ade54d2
 		summarizeBy: none
-		sourceColumn: REVIEW_SCORE
+		sourceColumn: review_score
 
 		annotation SummarizationSetBy = User
 
-	column is_late
+	column 'Late?'
 		dataType: boolean
-		lineageTag: 73175bfe-19f8-5c3b-91b8-8d57a1f7953c
+		lineageTag: 7c4ac3b9-8c82-5275-b34c-80918ef69a0a
 		summarizeBy: none
-		sourceColumn: IS_LATE
+		sourceColumn: Late?
 
 		annotation SummarizationSetBy = User
 
-	column delivery_bucket
+	column 'Delivery Outcome'
 		dataType: string
-		lineageTag: b2b68bb0-2b56-56c9-9354-e8fd191b268f
+		lineageTag: 1acddad9-9e7f-529c-ab95-7cb0726bd517
 		summarizeBy: none
-		sourceColumn: DELIVERY_BUCKET
+		sourceColumn: Delivery Outcome
 
 		annotation SummarizationSetBy = User
 
-	column review_comment
+	column Comment
 		dataType: string
-		lineageTag: ef1e5588-8138-53c3-8ad2-a344378e7d17
+		lineageTag: 44fe0db5-9a61-5f91-bae6-210e4f2a0857
 		summarizeBy: none
-		sourceColumn: REVIEW_COMMENT
+		sourceColumn: Comment
 
 		annotation SummarizationSetBy = User
 
-	column theme
+	column 'Complaint Theme'
 		dataType: string
-		lineageTag: d402f359-8e4a-58b8-a2a1-95d27e8194e0
+		lineageTag: 85ac09ea-8a75-5135-975e-6de12d661140
 		summarizeBy: none
-		sourceColumn: THEME
+		sourceColumn: Complaint Theme
 
 		annotation SummarizationSetBy = User
 
@@ -59,7 +60,8 @@ table REVIEW_THEMES_RULES
 				    Database = Source{[Name = "OLIST", Kind = "Database"]}[Data],
 				    Schema = Database{[Name = "MARTS", Kind = "Schema"]}[Data],
 				    Data = Schema{[Name = "REVIEW_THEMES_RULES", Kind = "Table"]}[Data],
-				    Typed = Table.TransformColumnTypes(Data, {{"ORDER_ID", type text}, {"REVIEW_SCORE", Int64.Type}, {"IS_LATE", type logical}, {"DELIVERY_BUCKET", type text}, {"REVIEW_COMMENT", type text}, {"THEME", type text}})
+				    Typed = Table.TransformColumnTypes(Data, {{"ORDER_ID", type text}, {"REVIEW_SCORE", Int64.Type}, {"IS_LATE", type logical}, {"DELIVERY_BUCKET", type text}, {"REVIEW_COMMENT", type text}, {"THEME", type text}}),
+				    Renamed = Table.RenameColumns(Typed, {{"ORDER_ID", "order_id"}, {"REVIEW_SCORE", "review_score"}, {"IS_LATE", "Late?"}, {"DELIVERY_BUCKET", "Delivery Outcome"}, {"REVIEW_COMMENT", "Comment"}, {"THEME", "Complaint Theme"}})
 				in
-				    Typed
+				    Renamed
 

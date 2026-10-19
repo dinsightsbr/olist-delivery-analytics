@@ -129,10 +129,6 @@ DIVIDE (
 -- "Share of late reviews" uses is_late = TRUE(). Plotting the two measures gives a clean legend.
 
 On-time Delivery % (min 100 orders) = IF ( [Orders] >= 100, [On-time Delivery %] )
-
-Share of Late Orders = DIVIDE ( [Late Orders], CALCULATE ( [Late Orders], ALL ( DIM_CUSTOMER ) ) )
--- "Where is the pool?": the state's share of every late order in the period. Rate (On-time %) says
--- how bad; share says how big. Rio is the second-largest pool after São Paulo.
 -- Blanks tiny states (RR, AP, AC) out of rankings without a visual-level filter.
 
 Low Reviews from Late Orders % =
@@ -213,8 +209,44 @@ Title | Scenario =
 
 **Breakdown** (Modeling > New parameter > Fields): `DIM_CUSTOMER[customer_state]`, `DIM_CUSTOMER[customer_region]`, `DIM_SELLER[seller_state]`, `DIM_PRODUCT[category_label]`, `DIM_PRODUCT[weight_band]`. One bar chart, one slicer, five views.
 
-## 5. Reconciliation routine (before publishing)
+## 5. Reconciliation routine (before the interview)
 
 1. In Snowsight run the last query of `sql/40_semantic.sql` (`V_KPI_MONTHLY` by month).
 2. In Power BI build a hidden table visual: `year_month`, `[Orders]`, `[GMV]`, `[Late Delivery %]` with the analysis-window filter **off**.
 3. The two must match to the cent. Screenshot both for the appendix page.
+
+## 6. Added in v0.3 (loyalty, Pareto, time split, calendar)
+
+Columns shown to users now carry display names (`Customer State`, `Delivery Outcome`, `Month`, `Weekday`...);
+the generator rewrites every DAX reference, so the technical names below still work in `build_pbip.py`.
+
+```dax
+-- Where the pool is (page 3 Pareto)
+Share of Late Orders = DIVIDE ( [Late Orders], CALCULATE ( [Late Orders], ALL ( DIM_CUSTOMER ) ) )
+
+Cumulative Share of Late Orders =
+VAR _cur = [Late Orders]
+VAR _states = ALLSELECTED ( DIM_CUSTOMER[Customer State] )
+VAR _total = CALCULATE ( [Late Orders], _states )
+VAR _cum = SUMX ( FILTER ( _states, [Late Orders] >= _cur ), [Late Orders] )
+RETURN DIVIDE ( _cum, _total )
+
+-- Where the days go (page 2): calculated columns Seller Handling Days = approved -> carrier,
+-- Carrier Transit Days = carrier -> customer, averaged over delivered orders
+Avg Seller Handling Days = CALCULATE ( AVERAGE ( FCT_ORDERS[Seller Handling Days] ), FCT_ORDERS[is_delivered] = TRUE () )
+Avg Carrier Transit Days = CALCULATE ( AVERAGE ( FCT_ORDERS[Carrier Transit Days] ), FCT_ORDERS[is_delivered] = TRUE () )
+
+-- Loyalty (page 4): Is First Order = the customer's earliest order; repeat status is all-time
+Repeat Rate after Late First Order =
+VAR _c = CALCULATETABLE ( VALUES ( FCT_ORDERS[customer_unique_id] ),
+                          FCT_ORDERS[Is First Order] = TRUE (), FCT_ORDERS[is_late] = TRUE () )
+RETURN DIVIDE (
+    CALCULATE ( COUNTROWS ( DIM_CUSTOMER ), DIM_CUSTOMER[Repeat Customer?] = TRUE (),
+                TREATAS ( _c, DIM_CUSTOMER[customer_unique_id] ) ),
+    COUNTROWS ( _c ) )
+-- twin measures: after On-time First Order (Delivery Outcome = "On time"), after Low-review First Order
+```
+
+Calendar: a DAX table `Holidays` (Brazilian national holidays, Carnival and Black Friday 2017-2018) feeds
+`DIM_DATE[Near Holiday?]` and `DIM_DATE[Purchase Period]` (±3 days). `Definitions` is a DAX table that
+drives the Definitions page, reached from the ⓘ button on every page.

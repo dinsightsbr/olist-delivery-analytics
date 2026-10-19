@@ -1,32 +1,32 @@
-relationship 8ed8b7b1-83be-544b-b3f0-f82aefad7e4e
+relationship 6aba4952-3563-5048-abeb-885a33e47809
 	fromColumn: FCT_ORDERS.purchase_date_key
 	toColumn: DIM_DATE.date_key
 
-relationship 61e3fd69-b9f4-5c9e-af92-20bfab77f640
+relationship fb07b6e3-1bca-5d92-885d-0ad4fc226dcc
 	fromColumn: FCT_ORDERS.customer_unique_id
 	toColumn: DIM_CUSTOMER.customer_unique_id
 
-relationship 116fa2dd-3749-5c6a-b943-23e2cc0fd3ec
+relationship 6a230ae7-0a11-50f1-a592-73949307db51
 	fromColumn: FCT_ORDERS.primary_seller_id
 	toColumn: DIM_SELLER.seller_id
 
-relationship 620f3c0d-f08b-5f41-bb11-b315ce8600a1
+relationship 182a4e7e-643e-5f3e-8a77-fe66070e52dc
 	fromColumn: FCT_ORDER_ITEMS.purchase_date_key
 	toColumn: DIM_DATE.date_key
 
-relationship 1695e154-5a33-553e-af8d-9319e81e10d3
+relationship 63d3d5b5-da85-5bda-9f00-c253107cee62
 	fromColumn: FCT_ORDER_ITEMS.customer_unique_id
 	toColumn: DIM_CUSTOMER.customer_unique_id
 
-relationship 9405a7e3-7815-546f-adcc-b4e21e8a3df1
+relationship 697b702b-9f05-5188-9964-11bd6990d4ba
 	fromColumn: FCT_ORDER_ITEMS.seller_id
 	toColumn: DIM_SELLER.seller_id
 
-relationship 5ea8c058-8618-5817-a3a8-08b8170a168b
+relationship d6f9d0d4-039b-5b81-af94-dd45907a5867
 	fromColumn: FCT_ORDER_ITEMS.product_id
 	toColumn: DIM_PRODUCT.product_id
 
-relationship 9adadf48-ebb2-50ac-a90e-f89efca281a4
+relationship 53d6b11e-451f-5f52-bc51-15dbf779198e
 	fromColumn: REVIEW_THEMES_RULES.order_id
 	toColumn: FCT_ORDERS.order_id
 

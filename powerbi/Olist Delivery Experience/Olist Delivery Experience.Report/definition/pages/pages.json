@@ -4,8 +4,10 @@
     "p1_overview",
     "p2_delivery_experience",
     "p3_where",
-    "p4_recommendations",
-    "p5_appendix"
+    "p4_loyalty",
+    "p5_recommendations",
+    "p6_definitions",
+    "p7_appendix"
   ],
   "activePageName": "p1_overview"
 }

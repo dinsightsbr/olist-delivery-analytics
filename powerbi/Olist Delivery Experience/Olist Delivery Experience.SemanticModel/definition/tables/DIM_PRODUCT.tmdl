@@ -1,88 +1,92 @@
 table DIM_PRODUCT
-	lineageTag: 64880f5f-16fb-5a6d-b547-fdd43eedd4ab
+	lineageTag: 2914afdd-a3d0-55f1-91ad-2550c13b72dc
 
 	column product_id
 		dataType: string
-		lineageTag: cfcd1a3c-54e7-5577-9ad4-e91dcb6f5dba
+		lineageTag: c27b796e-84a4-5b3d-8968-f7eafe8bd9dd
 		summarizeBy: none
-		sourceColumn: PRODUCT_ID
+		sourceColumn: product_id
 
 		annotation SummarizationSetBy = User
 
 	column category_pt
 		dataType: string
-		lineageTag: c46d2b04-d358-52ef-b998-55c39677b286
+		isHidden
+		lineageTag: 1fcd94d5-46af-57ac-bdf4-983386c38dee
 		summarizeBy: none
-		sourceColumn: CATEGORY_PT
+		sourceColumn: category_pt
 
 		annotation SummarizationSetBy = User
 
 	column category_en
 		dataType: string
-		lineageTag: 91b08342-239f-50ae-95e4-97be25515da4
+		isHidden
+		lineageTag: 9eb8409c-d250-50b1-b012-bebcfc15c6e4
 		summarizeBy: none
-		sourceColumn: CATEGORY_EN
+		sourceColumn: category_en
 
 		annotation SummarizationSetBy = User
 
-	column category_label
+	column Category
 		dataType: string
-		lineageTag: 2914afdd-a3d0-55f1-91ad-2550c13b72dc
+		lineageTag: 08899e72-dcbf-5b00-b8d9-1437f185022b
 		summarizeBy: none
-		sourceColumn: CATEGORY_LABEL
+		sourceColumn: Category
 
 		annotation SummarizationSetBy = User
 
 	column name_length
 		dataType: int64
+		isHidden
 		formatString: 0
-		lineageTag: c27b796e-84a4-5b3d-8968-f7eafe8bd9dd
+		lineageTag: 1edfee74-9362-5895-ad0c-8b62a4e89f52
 		summarizeBy: none
-		sourceColumn: NAME_LENGTH
+		sourceColumn: name_length
 
 		annotation SummarizationSetBy = User
 
 	column description_length
 		dataType: int64
+		isHidden
 		formatString: 0
-		lineageTag: 1fcd94d5-46af-57ac-bdf4-983386c38dee
+		lineageTag: cafcc3fd-a3ff-5190-b1de-e6e0bb1c4812
 		summarizeBy: none
-		sourceColumn: DESCRIPTION_LENGTH
+		sourceColumn: description_length
 
 		annotation SummarizationSetBy = User
 
 	column photos_qty
 		dataType: int64
 		formatString: 0
-		lineageTag: 9eb8409c-d250-50b1-b012-bebcfc15c6e4
+		lineageTag: 5a1197fc-58b2-5ef0-be8a-8cf534a4238d
 		summarizeBy: none
-		sourceColumn: PHOTOS_QTY
+		sourceColumn: photos_qty
 
 		annotation SummarizationSetBy = User
 
-	column weight_g
+	column 'Weight (g)'
 		dataType: int64
 		formatString: #,0
-		lineageTag: 08899e72-dcbf-5b00-b8d9-1437f185022b
+		lineageTag: b8f35852-0c2f-5db3-832a-67a2f3d1f87f
 		summarizeBy: none
-		sourceColumn: WEIGHT_G
+		sourceColumn: Weight (g)
 
 		annotation SummarizationSetBy = User
 
 	column volume_cm3
 		dataType: int64
 		formatString: #,0
-		lineageTag: 1edfee74-9362-5895-ad0c-8b62a4e89f52
+		lineageTag: 59b37fce-f87b-54db-89bd-b3b836875d94
 		summarizeBy: none
-		sourceColumn: VOLUME_CM3
+		sourceColumn: volume_cm3
 
 		annotation SummarizationSetBy = User
 
-	column weight_band
+	column 'Weight Band'
 		dataType: string
-		lineageTag: cafcc3fd-a3ff-5190-b1de-e6e0bb1c4812
+		lineageTag: 067cf455-0fd9-58a6-9e55-36366c88df04
 		summarizeBy: none
-		sourceColumn: WEIGHT_BAND
+		sourceColumn: Weight Band
 
 		annotation SummarizationSetBy = User
 
@@ -94,7 +98,8 @@ table DIM_PRODUCT
 				    Database = Source{[Name = "OLIST", Kind = "Database"]}[Data],
 				    Schema = Database{[Name = "MARTS", Kind = "Schema"]}[Data],
 				    Data = Schema{[Name = "DIM_PRODUCT", Kind = "Table"]}[Data],
-				    Typed = Table.TransformColumnTypes(Data, {{"PRODUCT_ID", type text}, {"CATEGORY_PT", type text}, {"CATEGORY_EN", type text}, {"CATEGORY_LABEL", type text}, {"NAME_LENGTH", Int64.Type}, {"DESCRIPTION_LENGTH", Int64.Type}, {"PHOTOS_QTY", Int64.Type}, {"WEIGHT_G", Int64.Type}, {"VOLUME_CM3", Int64.Type}, {"WEIGHT_BAND", type text}})
+				    Typed = Table.TransformColumnTypes(Data, {{"PRODUCT_ID", type text}, {"CATEGORY_PT", type text}, {"CATEGORY_EN", type text}, {"CATEGORY_LABEL", type text}, {"NAME_LENGTH", Int64.Type}, {"DESCRIPTION_LENGTH", Int64.Type}, {"PHOTOS_QTY", Int64.Type}, {"WEIGHT_G", Int64.Type}, {"VOLUME_CM3", Int64.Type}, {"WEIGHT_BAND", type text}}),
+				    Renamed = Table.RenameColumns(Typed, {{"PRODUCT_ID", "product_id"}, {"CATEGORY_PT", "category_pt"}, {"CATEGORY_EN", "category_en"}, {"CATEGORY_LABEL", "Category"}, {"NAME_LENGTH", "name_length"}, {"DESCRIPTION_LENGTH", "description_length"}, {"PHOTOS_QTY", "photos_qty"}, {"WEIGHT_G", "Weight (g)"}, {"VOLUME_CM3", "volume_cm3"}, {"WEIGHT_BAND", "Weight Band"}})
 				in
-				    Typed
+				    Renamed
 

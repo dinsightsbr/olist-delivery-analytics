@@ -1,47 +1,49 @@
 table FCT_ORDER_ITEMS
-	lineageTag: aaad4d9d-3f93-5631-bb6b-eea29970f8f1
+	lineageTag: 344a4b10-0868-5381-8569-826be7b3b33b
 
 	column order_id
 		dataType: string
-		lineageTag: fba19b80-2681-53ce-b3da-149f7e169839
+		isHidden
+		lineageTag: 16120e8b-21f3-5f88-bec4-1ae97db0d4ef
 		summarizeBy: none
-		sourceColumn: ORDER_ID
+		sourceColumn: order_id
 
 		annotation SummarizationSetBy = User
 
 	column order_item_id
 		dataType: int64
+		isHidden
 		formatString: 0
-		lineageTag: 54df58d1-9f21-5dfa-83b9-d019633c0333
+		lineageTag: f187502b-2979-56ae-9031-90d6c427e046
 		summarizeBy: none
-		sourceColumn: ORDER_ITEM_ID
+		sourceColumn: order_item_id
 
 		annotation SummarizationSetBy = User
 
 	column product_id
 		dataType: string
 		isHidden
-		lineageTag: 8a5df385-3f75-5106-8481-8d6f2417d9ad
+		lineageTag: a1eeda28-79d8-5546-b4a5-45aea86ee913
 		summarizeBy: none
-		sourceColumn: PRODUCT_ID
+		sourceColumn: product_id
 
 		annotation SummarizationSetBy = User
 
 	column seller_id
 		dataType: string
 		isHidden
-		lineageTag: 06a21342-3a13-5b7d-9e04-f7559e2160be
+		lineageTag: 18264dc0-2da8-5ba7-bc95-77ea4f64b1e6
 		summarizeBy: none
-		sourceColumn: SELLER_ID
+		sourceColumn: seller_id
 
 		annotation SummarizationSetBy = User
 
 	column customer_unique_id
 		dataType: string
 		isHidden
-		lineageTag: 1b53165f-f9d1-5660-8b19-0d4d6ec3aeeb
+		lineageTag: 0275e7f6-076f-5167-9a2f-d11eacd27a0a
 		summarizeBy: none
-		sourceColumn: CUSTOMER_UNIQUE_ID
+		sourceColumn: customer_unique_id
 
 		annotation SummarizationSetBy = User
 
@@ -49,50 +51,50 @@ table FCT_ORDER_ITEMS
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: 716358e9-6c1d-5f1c-b745-baf619f2e539
+		lineageTag: adee50ef-e4b6-56d1-af35-5f627551c1ee
 		summarizeBy: none
-		sourceColumn: PURCHASE_DATE_KEY
+		sourceColumn: purchase_date_key
 
 		annotation SummarizationSetBy = User
 
-	column order_status
+	column 'Order Status'
 		dataType: string
-		lineageTag: d50e3775-aac1-5f26-a077-5701ef7f4088
+		lineageTag: 7aa80eb4-b951-5a4d-bdef-8e6befbb4630
 		summarizeBy: none
-		sourceColumn: ORDER_STATUS
+		sourceColumn: Order Status
 
 		annotation SummarizationSetBy = User
 
 	column is_delivered
 		dataType: boolean
-		lineageTag: 344a4b10-0868-5381-8569-826be7b3b33b
+		lineageTag: 96a3a825-d73a-5c47-aa7f-75e7c3201bd7
 		summarizeBy: none
-		sourceColumn: IS_DELIVERED
+		sourceColumn: is_delivered
 
 		annotation SummarizationSetBy = User
 
-	column is_late
+	column 'Late?'
 		dataType: boolean
-		lineageTag: 16120e8b-21f3-5f88-bec4-1ae97db0d4ef
+		lineageTag: 473b55ba-c0f7-5818-9b50-8b6af34e8bcb
 		summarizeBy: none
-		sourceColumn: IS_LATE
+		sourceColumn: Late?
 
 		annotation SummarizationSetBy = User
 
 	column delay_days
 		dataType: int64
 		formatString: 0
-		lineageTag: f187502b-2979-56ae-9031-90d6c427e046
+		lineageTag: 6067dc0b-35b8-589f-902d-aff4cdc03498
 		summarizeBy: none
-		sourceColumn: DELAY_DAYS
+		sourceColumn: delay_days
 
 		annotation SummarizationSetBy = User
 
-	column delivery_bucket
+	column 'Delivery Outcome'
 		dataType: string
-		lineageTag: a1eeda28-79d8-5546-b4a5-45aea86ee913
+		lineageTag: 92699d8b-0d57-5090-a7c3-3e04ef2177ce
 		summarizeBy: none
-		sourceColumn: DELIVERY_BUCKET
+		sourceColumn: Delivery Outcome
 		sortByColumn: delivery_bucket_sort
 
 		annotation SummarizationSetBy = User
@@ -101,9 +103,9 @@ table FCT_ORDER_ITEMS
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: 18264dc0-2da8-5ba7-bc95-77ea4f64b1e6
+		lineageTag: 9dae7d30-e561-5c78-8afb-c741dd82deeb
 		summarizeBy: none
-		sourceColumn: DELIVERY_BUCKET_SORT
+		sourceColumn: delivery_bucket_sort
 
 		annotation SummarizationSetBy = User
 
@@ -111,69 +113,71 @@ table FCT_ORDER_ITEMS
 		dataType: int64
 		isHidden
 		formatString: 0
-		lineageTag: 0275e7f6-076f-5167-9a2f-d11eacd27a0a
+		lineageTag: df912d38-eeac-5f13-b771-75d76d6d66ce
 		summarizeBy: none
-		sourceColumn: REVIEW_SCORE
+		sourceColumn: review_score
 
 		annotation SummarizationSetBy = User
 
 	column price
 		dataType: double
 		formatString: #,0.00
-		lineageTag: adee50ef-e4b6-56d1-af35-5f627551c1ee
+		lineageTag: a829b320-490b-58bc-ac33-4db26adbac47
 		summarizeBy: none
-		sourceColumn: PRICE
+		sourceColumn: price
 
 		annotation SummarizationSetBy = User
 
 	column freight_value
 		dataType: double
 		formatString: #,0.00
-		lineageTag: 7aa80eb4-b951-5a4d-bdef-8e6befbb4630
+		lineageTag: de75d579-b3ce-5568-851b-8f1982799cb0
 		summarizeBy: none
-		sourceColumn: FREIGHT_VALUE
+		sourceColumn: freight_value
 
 		annotation SummarizationSetBy = User
 
 	column freight_pct
 		dataType: double
 		formatString: 0.0%
-		lineageTag: 96a3a825-d73a-5c47-aa7f-75e7c3201bd7
+		lineageTag: 73175bfe-19f8-5c3b-91b8-8d57a1f7953c
 		summarizeBy: none
-		sourceColumn: FREIGHT_PCT
+		sourceColumn: freight_pct
 
 		annotation SummarizationSetBy = User
 
 	column shipping_limit_at
 		dataType: dateTime
 		formatString: General Date
-		lineageTag: 473b55ba-c0f7-5818-9b50-8b6af34e8bcb
+		lineageTag: b2b68bb0-2b56-56c9-9354-e8fd191b268f
 		summarizeBy: none
-		sourceColumn: SHIPPING_LIMIT_AT
+		sourceColumn: shipping_limit_at
 
 		annotation SummarizationSetBy = User
 
-	column seller_state
+	column 'Seller State'
 		dataType: string
-		lineageTag: 6067dc0b-35b8-589f-902d-aff4cdc03498
+		isHidden
+		lineageTag: ef1e5588-8138-53c3-8ad2-a344378e7d17
 		summarizeBy: none
-		sourceColumn: SELLER_STATE
+		sourceColumn: Seller State
 
 		annotation SummarizationSetBy = User
 
-	column customer_state
+	column 'Customer State'
 		dataType: string
-		lineageTag: 92699d8b-0d57-5090-a7c3-3e04ef2177ce
+		isHidden
+		lineageTag: d402f359-8e4a-58b8-a2a1-95d27e8194e0
 		summarizeBy: none
-		sourceColumn: CUSTOMER_STATE
+		sourceColumn: Customer State
 
 		annotation SummarizationSetBy = User
 
-	column is_interstate
+	column 'Interstate?'
 		dataType: boolean
-		lineageTag: 9dae7d30-e561-5c78-8afb-c741dd82deeb
+		lineageTag: 81326247-429c-504f-bb6e-d16bdd0a8181
 		summarizeBy: none
-		sourceColumn: IS_INTERSTATE
+		sourceColumn: Interstate?
 
 		annotation SummarizationSetBy = User
 
@@ -186,7 +190,8 @@ table FCT_ORDER_ITEMS
 				    Schema = Database{[Name = "MARTS", Kind = "Schema"]}[Data],
 				    Data = Schema{[Name = "FCT_ORDER_ITEMS", Kind = "Table"]}[Data],
 				    Windowed = Table.SelectRows(Data, each [PURCHASE_DATE_KEY] >= 20170101 and [PURCHASE_DATE_KEY] <= 20180831),
-				    Typed = Table.TransformColumnTypes(Windowed, {{"ORDER_ID", type text}, {"ORDER_ITEM_ID", Int64.Type}, {"PRODUCT_ID", type text}, {"SELLER_ID", type text}, {"CUSTOMER_UNIQUE_ID", type text}, {"PURCHASE_DATE_KEY", Int64.Type}, {"ORDER_STATUS", type text}, {"IS_DELIVERED", type logical}, {"IS_LATE", type logical}, {"DELAY_DAYS", Int64.Type}, {"DELIVERY_BUCKET", type text}, {"DELIVERY_BUCKET_SORT", Int64.Type}, {"REVIEW_SCORE", Int64.Type}, {"PRICE", type number}, {"FREIGHT_VALUE", type number}, {"FREIGHT_PCT", type number}, {"SHIPPING_LIMIT_AT", type datetime}, {"SELLER_STATE", type text}, {"CUSTOMER_STATE", type text}, {"IS_INTERSTATE", type logical}})
+				    Typed = Table.TransformColumnTypes(Windowed, {{"ORDER_ID", type text}, {"ORDER_ITEM_ID", Int64.Type}, {"PRODUCT_ID", type text}, {"SELLER_ID", type text}, {"CUSTOMER_UNIQUE_ID", type text}, {"PURCHASE_DATE_KEY", Int64.Type}, {"ORDER_STATUS", type text}, {"IS_DELIVERED", type logical}, {"IS_LATE", type logical}, {"DELAY_DAYS", Int64.Type}, {"DELIVERY_BUCKET", type text}, {"DELIVERY_BUCKET_SORT", Int64.Type}, {"REVIEW_SCORE", Int64.Type}, {"PRICE", type number}, {"FREIGHT_VALUE", type number}, {"FREIGHT_PCT", type number}, {"SHIPPING_LIMIT_AT", type datetime}, {"SELLER_STATE", type text}, {"CUSTOMER_STATE", type text}, {"IS_INTERSTATE", type logical}}),
+				    Renamed = Table.RenameColumns(Typed, {{"ORDER_ID", "order_id"}, {"ORDER_ITEM_ID", "order_item_id"}, {"PRODUCT_ID", "product_id"}, {"SELLER_ID", "seller_id"}, {"CUSTOMER_UNIQUE_ID", "customer_unique_id"}, {"PURCHASE_DATE_KEY", "purchase_date_key"}, {"ORDER_STATUS", "Order Status"}, {"IS_DELIVERED", "is_delivered"}, {"IS_LATE", "Late?"}, {"DELAY_DAYS", "delay_days"}, {"DELIVERY_BUCKET", "Delivery Outcome"}, {"DELIVERY_BUCKET_SORT", "delivery_bucket_sort"}, {"REVIEW_SCORE", "review_score"}, {"PRICE", "price"}, {"FREIGHT_VALUE", "freight_value"}, {"FREIGHT_PCT", "freight_pct"}, {"SHIPPING_LIMIT_AT", "shipping_limit_at"}, {"SELLER_STATE", "Seller State"}, {"CUSTOMER_STATE", "Customer State"}, {"IS_INTERSTATE", "Interstate?"}})
 				in
-				    Typed
+				    Renamed
 
